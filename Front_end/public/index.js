@@ -1,6 +1,6 @@
 // TAB
 
-var tabActiva;
+var tabActiva = "p1";
 function openCity(evt, cityName) {
   // Declare all variables
   var i, tabcontent, tablinks;

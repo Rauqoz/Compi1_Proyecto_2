@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width" />
     <title>Front End</title>
     <link href="index.css" type="text/css" rel="stylesheet" />
     <!-- script para index js -->
@@ -10,6 +10,7 @@
     <script src="lib/codemirror.js"></script>
     <link rel="stylesheet" href="lib/codemirror.css" />
     <link rel="stylesheet" href="theme/material.css" />
+    <link rel="stylesheet" href="theme/material-darker.css" />
     <script src="mode/javascript/javascript.js"></script>
   </head>
   <body>
@@ -40,36 +41,57 @@
         </div>
       </div>
     </div>
-    <br />
-    <!-- parte de las tabs -->
-    <div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'p1')">Petaña 1</button>
-      <button class="tablinks" onclick="openCity(event, 'p2')">
-        Pestaña 2
-      </button>
-      <button class="tablinks" onclick="openCity(event, 'p3')">
-        Pestaña 3
-      </button>
-      <button class="tablinks" onclick="openCity(event, 'p4')">
-        Pestaña 4
-      </button>
-    </div>
 
-    <!-- Tab content -->
-    <div id="p1" class="tabcontent">
-      <textarea class="cm1"></textarea>
-    </div>
+    <div class="todo">
+      <!-- Cuerpo pagina -->
+      <div class="izquierda">
+        <h1 class="iden">Raul Quiñonez</h1>
+        <h1 class="iden">201503903</h1>
+        <br />
+        <!-- parte de las tabs -->
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'p1')">
+            Petaña 1
+          </button>
+          <button class="tablinks" onclick="openCity(event, 'p2')">
+            Pestaña 2
+          </button>
+          <button class="tablinks" onclick="openCity(event, 'p3')">
+            Pestaña 3
+          </button>
+          <button class="tablinks" onclick="openCity(event, 'p4')">
+            Pestaña 4
+          </button>
+        </div>
+        <!-- Tab content -->
+        <div id="p1" class="tabcontent">
+          <textarea class="cm1"></textarea>
+        </div>
 
-    <div id="p2" class="tabcontent">
-      <textarea class="cm2"></textarea>
-    </div>
+        <div id="p2" class="tabcontent">
+          <textarea class="cm2"></textarea>
+        </div>
 
-    <div id="p3" class="tabcontent">
-      <textarea class="cm3"></textarea>
-    </div>
+        <div id="p3" class="tabcontent">
+          <textarea class="cm3"></textarea>
+        </div>
 
-    <div id="p4" class="tabcontent">
-      <textarea class="cm4"></textarea>
+        <div id="p4" class="tabcontent">
+          <textarea class="cm4"></textarea>
+        </div>
+      </div>
+
+      <div class="derecha">
+        <h1 class="iden">Errores Js</h1>
+        <div class="tabjs">
+          <textarea class="e_js"></textarea>
+        </div>
+        <br />
+        <h1 class="iden">Errores Py</h1>
+        <div class="tabpy">
+          <textarea class="e_py"></textarea>
+        </div>
+      </div>
     </div>
 
     <!-- code mirror  -->
@@ -77,6 +99,10 @@
       var ajustes = {
         lineNumbers: true,
         theme: "material",
+      };
+      var ajustes2 = {
+        lineNumbers: true,
+        theme: "material-darker",
       };
       var code1 = CodeMirror.fromTextArea(
         document.querySelector(".cm1"),
@@ -93,6 +119,15 @@
       var code4 = CodeMirror.fromTextArea(
         document.querySelector(".cm4"),
         ajustes
+      );
+
+      var e_js = CodeMirror.fromTextArea(
+        document.querySelector(".e_js"),
+        ajustes2
+      );
+      var e_py = CodeMirror.fromTextArea(
+        document.querySelector(".e_py"),
+        ajustes2
       );
 
       function prueba() {

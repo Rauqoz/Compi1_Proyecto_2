@@ -18,12 +18,15 @@ body {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+
 }
 
 /* The dropdown container */
 .dropdown {
   float: left;
   overflow: hidden;
+  margin-left: 20px;
+
 }
 
 /* Dropdown button */

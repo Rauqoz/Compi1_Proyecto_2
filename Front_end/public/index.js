@@ -1,6 +1,6 @@
 // TAB
 
-var tabActiva = "p1";
+var tabActiva;
 function openCity(evt, cityName) {
   // Declare all variables
   var i, tabcontent, tablinks;
@@ -24,7 +24,7 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 
-function a_ambos() {
+function a_prueba() {
   //   console.log(tabActiva);
-  console.log(window.texto);
+  alert("prueba");
 }

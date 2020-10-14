@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Front End</title>
+    <link href="index.css" type="text/css" rel="stylesheet" />
+    <!-- script para index js -->
+    <script src="index.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css" />
+    <link rel="stylesheet" href="theme/material.css" />
+    <script src="mode/javascript/javascript.js"></script>
+  </head>
+  <body>
+    <!-- parte del menu -->
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">
+          Menu
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" onclick="abrir()">Abrir</a>
+          <a href="#" onclick="nuevo()">Nuevo</a>
+          <a href="#" onclick="guardar()">Guardar</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">
+          Descargar
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" onclick="a_ambos()">Ambos</a>
+          <a href="#" onclick="a_js()">JavaScript</a>
+          <a href="#" onclick="a_py()">Python</a>
+          <a href="#" onclick="prueba()">Prueba</a>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- parte de las tabs -->
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'p1')">Petaña 1</button>
+      <button class="tablinks" onclick="openCity(event, 'p2')">
+        Pestaña 2
+      </button>
+      <button class="tablinks" onclick="openCity(event, 'p3')">
+        Pestaña 3
+      </button>
+      <button class="tablinks" onclick="openCity(event, 'p4')">
+        Pestaña 4
+      </button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="p1" class="tabcontent">
+      <textarea class="cm1"></textarea>
+    </div>
+
+    <div id="p2" class="tabcontent">
+      <textarea class="cm2"></textarea>
+    </div>
+
+    <div id="p3" class="tabcontent">
+      <textarea class="cm3"></textarea>
+    </div>
+
+    <div id="p4" class="tabcontent">
+      <textarea class="cm4"></textarea>
+    </div>
+
+    <!-- code mirror  -->
+    <script>
+      var ajustes = {
+        lineNumbers: true,
+        theme: "material",
+      };
+      var code1 = CodeMirror.fromTextArea(
+        document.querySelector(".cm1"),
+        ajustes
+      );
+      var code2 = CodeMirror.fromTextArea(
+        document.querySelector(".cm2"),
+        ajustes
+      );
+      var code3 = CodeMirror.fromTextArea(
+        document.querySelector(".cm3"),
+        ajustes
+      );
+      var code4 = CodeMirror.fromTextArea(
+        document.querySelector(".cm4"),
+        ajustes
+      );
+
+      function prueba() {
+        // editor.getDoc().setValue(editor.getDoc().getValue() + "var ");
+        // console.log(editor.getDoc().getValue());
+        switch (window.tabActiva) {
+          case "p1":
+            console.log(code1.getDoc().getValue());
+            break;
+          case "p2":
+            console.log(code2.getDoc().getValue());
+            break;
+          case "p3":
+            console.log(code3.getDoc().getValue());
+            break;
+          case "p4":
+            console.log(code4.getDoc().getValue());
+            break;
+
+          default:
+            alert("Escoge Primero un Tab");
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>

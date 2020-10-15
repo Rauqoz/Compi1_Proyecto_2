@@ -1,30 +1,55 @@
+'use stric';
+
 // TAB
 
 var tabActiva;
-function openCity(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+function openTab(evt, tab) {
+	// Declare all variables
+	var i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+	// Get all elements with class="tabcontent" and hide them
+	tabcontent = document.getElementsByClassName('tabcontent');
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = 'none';
+	}
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+	// Get all elements with class="tablinks" and remove the class "active"
+	tablinks = document.getElementsByClassName('tablinks');
+	for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(' active', '');
+	}
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  tabActiva = cityName;
-  //   document.querySelector("#" + cityName).innerHTML = `<h3>${cityName}</h3>`;
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+	// Show the current tab, and add an "active" class to the button that opened the tab
+	tabActiva = tab;
+	//   document.querySelector("#" + tab).innerHTML = `<h3>${tab}</h3>`;
+	document.getElementById(tab).style.display = 'block';
+	evt.currentTarget.className += ' active';
 }
 
 function a_prueba() {
-  //   console.log(tabActiva);
-  alert("prueba");
+	console.log('Pestaña ' + tabActiva);
+	console.log(window.code1.getDoc().getValue());
+}
+
+function a_ambos() {
+	// editor.getDoc().setValue(editor.getDoc().getValue() + "var ");
+	// console.log(editor.getDoc().getValue());
+	switch (tabActiva) {
+		case 'p1':
+			console.log(window.code1.getDoc().getValue());
+			break;
+		case 'p2':
+			console.log(window.code2.getDoc().getValue());
+			break;
+		case 'p3':
+			console.log(window.code3.getDoc().getValue());
+			break;
+		case 'p4':
+			console.log(window.code4.getDoc().getValue());
+			break;
+
+		default:
+			alert('Escoge Primero un Tab');
+			break;
+	}
 }

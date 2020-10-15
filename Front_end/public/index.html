@@ -4,14 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Front End</title>
-    <link href="index.css" type="text/css" rel="stylesheet" />
     <!-- script para index js -->
-    <script src="index.js"></script>
     <script src="lib/codemirror.js"></script>
     <link rel="stylesheet" href="lib/codemirror.css" />
     <link rel="stylesheet" href="theme/material.css" />
     <link rel="stylesheet" href="theme/material-darker.css" />
     <script src="mode/javascript/javascript.js"></script>
+    <!-- mios -->
+    <link href="index.css" type="text/css" rel="stylesheet" />
+    <script src="index.js"></script>
+
   </head>
   <body>
     <!-- parte del menu -->
@@ -50,16 +52,16 @@
         <br />
         <!-- parte de las tabs -->
         <div class="tab">
-          <button class="tablinks" onclick="openCity(event, 'p1')">
+          <button class="tablinks" onclick="openTab(event, 'p1')">
             Petaña 1
           </button>
-          <button class="tablinks" onclick="openCity(event, 'p2')">
+          <button class="tablinks" onclick="openTab(event, 'p2')">
             Pestaña 2
           </button>
-          <button class="tablinks" onclick="openCity(event, 'p3')">
+          <button class="tablinks" onclick="openTab(event, 'p3')">
             Pestaña 3
           </button>
-          <button class="tablinks" onclick="openCity(event, 'p4')">
+          <button class="tablinks" onclick="openTab(event, 'p4')">
             Pestaña 4
           </button>
         </div>
@@ -100,22 +102,27 @@
         lineNumbers: true,
         theme: "material",
       };
+
       var ajustes2 = {
         lineNumbers: true,
         theme: "material-darker",
       };
+
       var code1 = CodeMirror.fromTextArea(
         document.querySelector(".cm1"),
         ajustes
       );
+
       var code2 = CodeMirror.fromTextArea(
         document.querySelector(".cm2"),
         ajustes
       );
+
       var code3 = CodeMirror.fromTextArea(
         document.querySelector(".cm3"),
         ajustes
       );
+
       var code4 = CodeMirror.fromTextArea(
         document.querySelector(".cm4"),
         ajustes
@@ -125,33 +132,12 @@
         document.querySelector(".e_js"),
         ajustes2
       );
+
       var e_py = CodeMirror.fromTextArea(
         document.querySelector(".e_py"),
         ajustes2
       );
 
-      function a_ambos() {
-        // editor.getDoc().setValue(editor.getDoc().getValue() + "var ");
-        // console.log(editor.getDoc().getValue());
-        switch (window.tabActiva) {
-          case "p1":
-            console.log(code1.getDoc().getValue());
-            break;
-          case "p2":
-            console.log(code2.getDoc().getValue());
-            break;
-          case "p3":
-            console.log(code3.getDoc().getValue());
-            break;
-          case "p4":
-            console.log(code4.getDoc().getValue());
-            break;
-
-          default:
-            alert("Escoge Primero un Tab");
-            break;
-        }
-      }
     </script>
   </body>
 </html>

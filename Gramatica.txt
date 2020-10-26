@@ -1,0 +1,248 @@
+start:	principal EOF
+;
+
+//class , interface
+principal:	r_public tprincipal
+;
+
+tprincipal:	r_class r_id l_abrir secundario l_cerrar
+	|	r_interface r_id l_abrir definiciones l_cerrar
+;
+
+definiciones:	r_void r_id p_abrir parametros p_cerrar l_abrir todo l_cerrar definiciones
+	|	tipo r_id p_abrir parametros p_cerrar l_abrir todo l_cerrar definiciones
+	|	
+;
+
+//main , variables , metodo
+secundario:	r_public main secundario
+	|	r_int declaracion secundario
+	|	r_string declaracion secundario
+	|	r_double declaracion secundario
+	|	r_bool declaracion secundario
+	|	r_char declaracion secundario
+	|	
+;
+
+//declaracion y asignacion
+declaracion:	r_id asignacion mdeclaracion r_puntocoma
+;
+
+asignacion :	r_igual valor
+	|	
+;
+
+valor:		r_numero mvalores
+	|	r_id emetodo mvalores
+	|	r_menos r_numero mvalores %prec UMENOS 
+	|	p_abrir valor p_cerrar mvalores
+	|	r_cadena mvalores
+	|	r_caracter mvalores
+	|	r_true mvalores
+	|	r_false mvalores
+	|	r_masmas  mvalores
+	|	r_menosmenos mvalores
+	|	r_mas  mvalores
+	|	r_menos mvalores
+	|	r_asterisco mvalores
+	|	r_diagonal mvalores
+	|	r_mayor mvalores
+	|	r_menor mvalores
+	|	r_mayorigual mvalores
+	|	r_menorigual mvalores
+	|	r_igualigual mvalores
+	|	r_notigual mvalores
+	|	r_and mvalores
+	|	r_or mvalores
+	|	r_xor mvalores
+;
+
+mvalores:	valor mvalores
+	|	
+;
+
+
+mdeclaracion:	r_coma r_id asignacion mdeclaracion 
+	|	
+;
+
+emetodo:	p_abrir p_cerrar
+	|	
+;
+
+//metodos
+main:		r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerrar l_abrir todo l_cerrar
+	|	metodos
+;
+
+metodos:	r_void r_id p_abrir parametros p_cerrar l_abrir todo l_cerrar
+	|	tipo r_id p_abrir parametros p_cerrar l_abrir todoreturn l_cerrar
+;
+
+tipo:		r_int
+	|	r_string
+	|	r_double
+	|	r_bool
+	|	r_char
+;
+
+parametros:	tipo r_id mparametros
+	|	
+;
+
+mparametros:	r_coma tipo r_id mparametros
+	|	
+;
+
+//todo lo de adentro de una funcion
+todoreturn:	r_int declaracion todoreturn
+	|	r_string declaracion todoreturn
+	|	r_double declaracion todoreturn
+	|	r_bool declaracion todoreturn
+	|	r_char declaracion todoreturn
+	|	r_if mif todoreturn
+	|	r_for mfor todoreturn
+	|	r_while mwhile todoreturn
+	|	r_do mdowhile todoreturn
+	|	r_return todoreturn
+	|	
+;
+
+//todo lo adentro de un metodo
+todo:		r_int declaracion todo
+	|	r_string declaracion todo
+	|	r_double declaracion todo
+	|	r_bool declaracion todo
+	|	r_char declaracion todo
+	|	r_if mif todo
+	|	r_for mfor todo
+	|	r_while mwhile todo
+	|	r_do mdowhile todo
+	|	
+;
+
+//todo lo de adentro de un ciclo
+todobreak:	r_int declaracion todobreak
+	|	r_string declaracion todobreak
+	|	r_double declaracion todobreak
+	|	r_bool declaracion todobreak
+	|	r_char declaracion todobreak
+	|	r_if mif todobreak
+	|	r_for mfor todobreak
+	|	r_while mwhile todobreak
+	|	r_do mdowhile todobreak
+	|	r_break todobreak
+	|	r_continue todobreak
+	|	
+;
+
+//metodo if
+mif:		p_abrir expresion p_cerrar l_abrir todo l_cerrar melseif melse
+;
+
+melseif:	r_else r_if p_abrir expresion p_cerrar l_abrir todo l_cerrar melseif 
+	|	
+;
+
+melse:		r_else l_abrir todo l_cerrar
+	|	
+;
+
+//metodo for
+mfor:		p_abrir expresionfor p_cerrar l_abrir todobreak l_cerrar
+;
+
+//metodo while
+mwhile:		p_abrir expresion p_cerrar l_abrir todobreak l_cerrar
+;
+
+//metodo do while
+mdowhile:	l_abrir todobreak l_cerrar r_while p_abrir expresion p_cerrar r_puntocoma
+;
+
+//expresion do, while, if
+expresion:	r_id emetodo opexpre
+	|	r_numero opexprenumero
+	|	r_true	
+	|	r_false
+	|	r_cadena opexpretexto
+	|	r_caracter opexpretexto
+;
+opexprenumero:	r_mayor topexprenumero logicanumero
+	|	r_menor topexprenumero logicanumero
+	|	r_mayorigual topexprenumero logicanumero
+	|	r_menorigual topexprenumero logicanumero
+	|	r_igualigual topexprenumero logicanumero
+	|	r_notigual topexprenumero logicanumero
+;
+
+topexprenumero:	r_numero
+	|	r_id emetodo
+;
+
+logicanumero:	r_and topexprenumero opexprenumero logicanumero
+	|	r_or topexprenumero opexprenumero logicanumero
+	|	r_xor topexprenumero opexprenumero logicanumero
+	|	
+;
+
+opexpretexto:	r_igualigual topexpretexto logicatexto
+	|	r_notigual topexpretexto logicatexto
+;
+
+topexpretexto:	r_cadena
+	|	r_caracter
+	|	r_id emetodo
+;
+
+logicatexto: 	r_and topexpretexto opexpretexto logicatexto
+	|	r_or topexpretexto  opexpretexto logicatexto
+	|	r_xor topexpretexto opexpretexto logicatexto
+	|	
+;
+
+opexpre:	r_mayor topexpreid logicaid
+	|	r_menor topexpreid logicaid
+	|	r_mayorigual topexpreid logicaid
+	|	r_menorigual topexpreid logicaid
+	|	r_igualigual topexpreid logicaid
+	|	r_notigual topexpreid logicaid
+;
+
+topexpreid:	r_cadena
+	|	r_caracter
+	|	r_id emetodo
+	|	r_true
+	|	r_false
+	|	r_numero
+;
+
+logicaid:	r_and topexpreid opexpre logicaid
+	|	r_or topexpreid opexpre logicaid
+	|	r_xor topexpreid opexpre logicaid
+	|	
+;
+
+//expresion for
+expresionfor:	tipo r_id r_igual r_numero r_puntocoma r_id logicafor r_puntocoma r_id adicion
+;
+
+logicafor:	r_mayor topexprefor 
+	|	r_menor topexprefor 
+	|	r_mayorigual topexprefor 
+	|	r_menorigual topexprefor 
+	|	r_igualigual topexprefor 
+	|	r_notigual topexprefor 
+;
+
+topexprefor:	r_id emetodo opfor
+	|	r_numero opfor
+	|	p_abrir topexprefor p_cerrar opfor
+;
+
+opfor:		r_mas topexprefor opfor
+	|	r_menos topexprefor opfor
+	|	r_asterisco topexprefor opfor
+	|	r_diagonal topexprefor opfor
+	|	
+;

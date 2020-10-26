@@ -1,0 +1,95 @@
+
+
+
+
+int n = var1 + " --- " + var2;
+string s =8+7/6*5;
+char c;
+bool b;
+double d;
+
+int w,x,y,z;
+
+void imprimir(){
+console.write("----------------");
+
+console.write(var1 + " --- " + var2);
+console.write("El nuevo valor de var1 es: " + var1);
+console.write(8+7/6*5);
+console.write("----------------");
+console.write("Playa al ");
+
+
+}
+
+string si(){
+  if (b > a){
+
+  Console.Write("b mayor que a");
+  }else if(a == b){
+  Console.Write("a y b son iguales");
+  }
+
+  return b+c;
+}
+
+
+
+int mientras(int t){
+
+  if (b<=a && !c){
+
+    Console.Write("b mayor que a");
+  }else {
+    Console.Write("a y b son iguales");
+  }
+
+while (b<=a && !c){
+
+  Console.Write("b mayor que a");
+
+  return ;
+}
+  
+  return a+b;
+}
+
+void main (){
+console.write('<html>');
+console.write('<head>');
+console.write('<title>Mi pagina</title>');
+console.write('</head>');
+console.write('<body style="background:yellow">');
+console.write('<h1>[olc1]practica1</h1>');
+console.write('<div style="background:white">');
+console.write('<h2>Encabezado h2</h2>');
+console.write('<p> este es un bloque<br> de textp, para una prueba. </p>');
+console.write('<br>');
+console.write('</div>');
+console.write('<div style="background:skyblue">');
+console.write('<h2>llenar los campos</h2>');
+console.write('<label> ingrese su nombre</label>');
+console.write('<br>');
+console.write('<input>');
+console.write('<br>');
+console.write('<button> mi boton</button>');
+
+console.write('<br>');
+console.write('</div>');
+console.write('</body>');
+console.write('</html>');
+
+
+}
+
+
+
+
+
+
+
+
+char maesto ( int m ){
+
+ return;
+}

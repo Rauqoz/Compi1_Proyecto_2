@@ -1,0 +1,35 @@
+variable	L(N|L|_)*	[a-zA-Z]([0-9]|[a-zA-Z]|\_)*
+numero		N+(.N+)?	[0-9]+(\.([0-9])*)?
+cadena		"(L|N|S)*"	\"(.)*\"
+caracter	'L'		\'[a-zA-Z]\'
+p_abrir		(		\(
+p_cerrar	)		\)
+l_abrir		{		\{
+l_cerrar	}		\}
+c_abrir		[		\[
+c_cerrar	]		\]
+coma		,		\,
+pcoma		;		\;
+igual		=		\=
+menorque	<		\<
+mayorque	>		\>
+mas		+		\+
+menos		-		\-
+barra		/		\/
+asterisco	*		\*
+exponente	**		\*\*
+modular		%		\%
+menorigual	<=		\<\=
+mayorigual	>=		\>\=
+notigual	!=		\!\=
+igualigual	==		\=\=
+and		&&		\&\&
+or		||		\|\|
+not		!		\!
+xor		^		\^
+masmas		++		\+\+
+menosmenos	--		\-\-
+comentario	// .		\/\/(.)*
+mcomentario	/* . */		\/\*(.|\s)*\*\/
+dospuntos	:		\:
+punto		.		\.

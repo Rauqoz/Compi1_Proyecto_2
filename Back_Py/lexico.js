@@ -16,7 +16,18 @@ class errorToken {
 	}
 }
 
-var prueba = `56.main 20Pedro_elmanco 15.9 1 0El_Niño_Gay15`;
+var prueba = `56.main%++ 20Pedro_elmanco 15.9 1 0El_Niño_Gay15 alf@ro==>='A'
+"hola alfarito te quiero mucho :3 "
+//alfaro es bien mentiroza
+main public static alfarito
+//comentario 2
+@ +-+-+-- === ? { } 5.papel *8
+/*comentario multi
+linea 
+*/`;
+// var prueba = `//alfaro es bien mentiroza
+// `;
+
 var tokensBuenos = [],
 	tokensMalos = [];
 
@@ -31,7 +42,31 @@ function lexico(texto) {
 	var isNumero = /[0-9]/i;
 	var isSpace = /\s|\t/i;
 	var isSaltoLine = /\n/i;
-	var isSimbolo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;|\(|\)|\{|\}|\[|\]]/i;
+	var isSimbolo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;|\(|\)|\{|\}|\[|\]|\"|\']/i;
+
+	var simbolos = [
+		[ '%', 'r_modular' ],
+		[ '+', 'r_mas' ],
+		[ '-', 'r_menos' ],
+		[ '*', 'r_asterisco' ],
+		[ '/', 'r_diagonal' ],
+		[ '++', 'r_masmas' ],
+		[ '--', 'r_menosmenos' ],
+		[ '<', 'r_menor' ],
+		[ '>', 'r_mayor' ],
+		[ '=', 'r_igual' ],
+		[ '!', 'r_not' ],
+		[ '&&', 'r_and' ],
+		[ '||', 'r_or' ],
+		[ '^', 'r_xor' ],
+		[ '<=', 'r_menorigual' ],
+		[ '>=', 'r_mayorigual' ],
+		[ '==', 'r_igualigual' ],
+		[ '!=', 'r_notigual' ],
+		[ ',', 'r_coma' ],
+		[ ':', 'r_dospuntos' ],
+		[ ';', 'r_puntocoma' ]
+	];
 
 	var reservadas = [
 		'true',
@@ -65,6 +100,12 @@ function lexico(texto) {
 		'println'
 	];
 
+	var comentariol = false,
+		comentariom = false,
+		caracter = false,
+		cadena = false,
+		signodoble = false;
+
 	var letra = texto.toLowerCase().split('');
 	letra.push(' ');
 	console.log(letra);
@@ -82,6 +123,51 @@ function lexico(texto) {
 					columnaE = 1;
 					filaE++;
 				} else if (letra[i].match(isSimbolo)) {
+					if (letra[i] == '"') {
+						i++;
+						cadena = true;
+					} else if (letra[i] == "'") {
+						i++;
+						caracter = true;
+					} else if (letra[i] == '/' && letra[i + 1] == '/') {
+						i++;
+						comentariol = true;
+					} else if (letra[i] == '/' && letra[i + 1] == '*') {
+						i++;
+						comentariom = true;
+					} else if (letra[i] == '+' && letra[i + 1] == '+') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '&' && letra[i + 1] == '&') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '-' && letra[i + 1] == '-') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '|' && letra[i + 1] == '|') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '<' && letra[i + 1] == '=') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '>' && letra[i + 1] == '=') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '=' && letra[i + 1] == '=') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					} else if (letra[i] == '!' && letra[i + 1] == '=') {
+						palabraArmada += letra[i];
+						signodoble = true;
+						i++;
+					}
 					i--;
 					opcion = 'D';
 				} else if (letra[i].match(isSpace)) {
@@ -97,10 +183,11 @@ function lexico(texto) {
 					palabraArmada += letra[i];
 				} else {
 					let bandera = false;
-					for (let i in reservadas) {
-						if (palabraArmada == reservadas[i]) {
+					for (let y in reservadas) {
+						if (palabraArmada == reservadas[y]) {
 							bandera = true;
-							tokensBuenos.push(new token(palabraArmada, 'r_' + reservadas[i]));
+							tokensBuenos.push(new token(palabraArmada, 'r_' + reservadas[y]));
+							break;
 						}
 					}
 					if (bandera == false) {
@@ -135,6 +222,43 @@ function lexico(texto) {
 				break;
 
 			case 'D':
+				if (caracter) {
+					columnaE++;
+					palabraArmada += letra[i];
+					opcion = 'F';
+				} else if (cadena) {
+					columnaE++;
+					palabraArmada += letra[i];
+					opcion = 'H';
+				} else if (comentariol) {
+					columnaE++;
+					opcion = 'G';
+				} else if (comentariom) {
+					columnaE++;
+					opcion = 'G';
+				} else if (signodoble) {
+					columnaE++;
+					palabraArmada += letra[i];
+					for (let y in simbolos) {
+						if (palabraArmada == simbolos[y][0]) {
+							tokensBuenos.push(new token(palabraArmada, simbolos[y][1]));
+							break;
+						}
+					}
+					signodoble = false;
+					palabraArmada = '';
+					opcion = 'A';
+				} else {
+					columnaE++;
+					for (let y in simbolos) {
+						if (letra[i] == simbolos[y][0]) {
+							tokensBuenos.push(new token(letra[i], simbolos[y][1]));
+							break;
+						}
+					}
+					palabraArmada = '';
+					opcion = 'A';
+				}
 				break;
 
 			case 'E':
@@ -162,12 +286,43 @@ function lexico(texto) {
 				break;
 
 			case 'F':
+				if (letra[i] == "'") {
+					i--;
+					opcion = 'J';
+				}
 				break;
 
 			case 'G':
+				if (comentariol) {
+					if (letra[i].match(isSaltoLine)) {
+						comentariol = false;
+						filaE++;
+						tokensBuenos.push(new token(palabraArmada, 'r_comentario'));
+						palabraArmada = '';
+						opcion = 'A';
+					} else {
+						palabraArmada += letra[i];
+						columnaE++;
+					}
+				} else if (comentariom) {
+					if (letra[i] == '*' && letra[i + 1] == '/') {
+						columnaE++;
+						opcion = 'K';
+					} else {
+						palabraArmada += letra[i];
+						columnaE++;
+					}
+				}
 				break;
 
 			case 'H':
+				if (letra[i] == '"') {
+					i--;
+					opcion = 'J';
+				} else {
+					columnaE++;
+					palabraArmada += letra[i];
+				}
 				break;
 
 			case 'I':
@@ -190,9 +345,32 @@ function lexico(texto) {
 				break;
 
 			case 'J':
+				if (caracter) {
+					caracter = false;
+					columnaE++;
+					tokensBuenos.push(new token(palabraArmada, 'r_caracter'));
+					palabraArmada = '';
+					opcion = 'A';
+				} else if (cadena) {
+					cadena = false;
+					columnaE++;
+					tokensBuenos.push(new token(palabraArmada, 'r_cadena'));
+					palabraArmada = '';
+					opcion = 'A';
+				} else if (comentariom) {
+					comentariom = false;
+					columnaE++;
+					tokensBuenos.push(new token(palabraArmada, 'r_comentario'));
+					palabraArmada = '';
+					opcion = 'A';
+				}
 				break;
 
 			case 'K':
+				if (letra[i] == '/') {
+					i--;
+					opcion = 'J';
+				}
 				break;
 
 			default:
@@ -208,16 +386,16 @@ function printL() {
 	console.log(tokensMalos);
 }
 
-function pruebas(dato) {
-	var todo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;]/i;
-	if (dato.match(todo)) {
-		console.log('si tiene');
-	} else {
-		console.log('nel');
-	}
-	console.log(dato.match(todo));
+function pruebas() {
+	// var todo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;]/i;
+	// if (dato.match(todo)) {
+	// 	console.log('si tiene');
+	// } else {
+	// 	console.log('nel');
+	// }
+	// console.log(dato.match(todo));
 }
 
-// pruebas(prueba);
+// pruebas();
 lexico(prueba);
 printL();

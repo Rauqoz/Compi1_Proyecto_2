@@ -25,8 +25,6 @@ main public static alfarito
 /*comentario multi
 linea 
 *****/`;
-// var prueba = `//alfaro es bien mentiroza
-// `;
 
 var tokensBuenos = [],
 	tokensMalos = [];
@@ -378,22 +376,10 @@ function lexico(texto) {
 }
 
 function printL() {
-	console.log('----Buenos----');
+	console.log('----Tokens Buenos----');
 	console.log(tokensBuenos);
-	console.log('----Malos----');
+	console.log('----Tokens Malos----');
 	console.log(tokensMalos);
 }
 
-function pruebas() {
-	// var todo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;]/i;
-	// if (dato.match(todo)) {
-	// 	console.log('si tiene');
-	// } else {
-	// 	console.log('nel');
-	// }
-	// console.log(dato.match(todo));
-}
-
-// pruebas();
-lexico(prueba);
-printL();
+module.exports = { tokensBuenos, tokensMalos, lexico, printL };

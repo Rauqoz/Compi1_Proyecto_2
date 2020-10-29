@@ -24,7 +24,7 @@ main public static alfarito
 @ +-+-+-- === ? { } 5.papel *8
 /*comentario multi
 linea 
-*/`;
+*****/`;
 // var prueba = `//alfaro es bien mentiroza
 // `;
 

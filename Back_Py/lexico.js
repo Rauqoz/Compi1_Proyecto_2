@@ -177,6 +177,7 @@ function lexico(texto) {
 					tokensMalos.push(new errorToken(letra[i], filaE, columnaE));
 				}
 				break;
+
 			case 'B':
 				if (letra[i].match(isLetra) || letra[i].match(isNumero) || letra[i] == '_') {
 					columnaE++;
@@ -218,7 +219,6 @@ function lexico(texto) {
 					i--;
 					opcion = 'A';
 				}
-
 				break;
 
 			case 'D':
@@ -282,7 +282,6 @@ function lexico(texto) {
 					palabraArmada = '';
 					opcion = 'A';
 				}
-
 				break;
 
 			case 'F':
@@ -341,7 +340,6 @@ function lexico(texto) {
 					palabraArmada = '';
 					opcion = 'A';
 				}
-
 				break;
 
 			case 'J':

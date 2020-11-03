@@ -2,9 +2,11 @@
 //ER
 //L(N|L|S)* | N+(SN+)? | ST*S | SLS | SS? | SST*(SS)?
 class token {
-	constructor(palabra, tipo) {
+	constructor(palabra, tipo, fila, columna) {
 		this.palabra = palabra;
 		this.tipo = tipo;
+		this.fila = fila;
+		this.columna = columna;
 	}
 }
 
@@ -63,7 +65,13 @@ function lexico(texto) {
 		[ '!=', 'r_notigual' ],
 		[ ',', 'r_coma' ],
 		[ ':', 'r_dospuntos' ],
-		[ ';', 'r_puntocoma' ]
+		[ ';', 'r_puntocoma' ],
+		[ '(', 'p_abrir' ],
+		[ ')', 'p_cerrar' ],
+		[ '{', 'l_abrir' ],
+		[ '}', 'l_cerrar' ],
+		[ '[', 'c_abrir' ],
+		[ ']', 'c_cerrar' ]
 	];
 
 	var reservadas = [
@@ -72,7 +80,7 @@ function lexico(texto) {
 		'int',
 		'string',
 		'double',
-		'bool',
+		'boolean',
 		'char',
 		'while',
 		'do',
@@ -185,12 +193,12 @@ function lexico(texto) {
 					for (let y in reservadas) {
 						if (palabraArmada == reservadas[y]) {
 							bandera = true;
-							tokensBuenos.push(new token(palabraArmada, 'r_' + reservadas[y]));
+							tokensBuenos.push(new token(palabraArmada, 'r_' + reservadas[y], filaE, columnaE));
 							break;
 						}
 					}
 					if (bandera == false) {
-						tokensBuenos.push(new token(palabraArmada, 'r_id'));
+						tokensBuenos.push(new token(palabraArmada, 'r_id', filaE, columnaE));
 					}
 					i--;
 					palabraArmada = '';
@@ -206,13 +214,13 @@ function lexico(texto) {
 					i--;
 					opcion = 'E';
 				} else if (letra[i].match(isSpace) || letra[i].match(isSimbolo)) {
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					palabraArmada = '';
 					i--;
 					opcion = 'A';
 				} else {
 					//guarda numero y luego regresa sin registrar el error para separar el token bueno del malo y revisar si es parte de un nuevo token bueno
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					palabraArmada = '';
 					i--;
 					opcion = 'A';
@@ -239,7 +247,7 @@ function lexico(texto) {
 					palabraArmada += letra[i];
 					for (let y in simbolos) {
 						if (palabraArmada == simbolos[y][0]) {
-							tokensBuenos.push(new token(palabraArmada, simbolos[y][1]));
+							tokensBuenos.push(new token(palabraArmada, simbolos[y][1], filaE, columnaE));
 							break;
 						}
 					}
@@ -250,7 +258,7 @@ function lexico(texto) {
 					columnaE++;
 					for (let y in simbolos) {
 						if (letra[i] == simbolos[y][0]) {
-							tokensBuenos.push(new token(letra[i], simbolos[y][1]));
+							tokensBuenos.push(new token(letra[i], simbolos[y][1], filaE, columnaE));
 							break;
 						}
 					}
@@ -268,14 +276,14 @@ function lexico(texto) {
 					opcion = 'I';
 				} else if (letra[i].match(isSpace) || letra[i].match(isSimbolo)) {
 					palabraArmada += '0';
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					i--;
 					palabraArmada = '';
 					opcion = 'A';
 				} else {
 					//guarda numero y luego regresa sin registrar el error para separar el token bueno del malo y revisar si es parte de un nuevo token bueno
 					palabraArmada += '0';
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					i--;
 					palabraArmada = '';
 					opcion = 'A';
@@ -294,7 +302,7 @@ function lexico(texto) {
 					if (letra[i].match(isSaltoLine)) {
 						comentariol = false;
 						filaE++;
-						tokensBuenos.push(new token(palabraArmada, 'r_comentario'));
+						tokensBuenos.push(new token(palabraArmada, 'r_comentario', filaE, columnaE));
 						palabraArmada = '';
 						opcion = 'A';
 					} else {
@@ -327,13 +335,13 @@ function lexico(texto) {
 					columnaE++;
 					palabraArmada += letra[i];
 				} else if (letra[i].match(isSpace) || letra[i].match(isSimbolo)) {
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					i--;
 					palabraArmada = '';
 					opcion = 'A';
 				} else {
 					//guarda numero y luego regresa sin registrar el error para separar el token bueno del malo y revisar si es parte de un nuevo token bueno
-					tokensBuenos.push(new token(palabraArmada, 'r_numero'));
+					tokensBuenos.push(new token(palabraArmada, 'r_numero', filaE, columnaE));
 					i--;
 					palabraArmada = '';
 					opcion = 'A';
@@ -344,19 +352,19 @@ function lexico(texto) {
 				if (caracter) {
 					caracter = false;
 					columnaE++;
-					tokensBuenos.push(new token(palabraArmada, 'r_caracter'));
+					tokensBuenos.push(new token(palabraArmada, 'r_caracter', filaE, columnaE));
 					palabraArmada = '';
 					opcion = 'A';
 				} else if (cadena) {
 					cadena = false;
 					columnaE++;
-					tokensBuenos.push(new token(palabraArmada, 'r_cadena'));
+					tokensBuenos.push(new token(palabraArmada, 'r_cadena', filaE, columnaE));
 					palabraArmada = '';
 					opcion = 'A';
 				} else if (comentariom) {
 					comentariom = false;
 					columnaE++;
-					tokensBuenos.push(new token(palabraArmada, 'r_comentario'));
+					tokensBuenos.push(new token(palabraArmada, 'r_comentario', filaE, columnaE));
 					palabraArmada = '';
 					opcion = 'A';
 				}
@@ -381,5 +389,8 @@ function printL() {
 	console.log('----Tokens Malos----');
 	console.log(tokensMalos);
 }
+
+// lexico(prueba);
+// printL();
 
 module.exports = { tokensBuenos, tokensMalos, lexico, printL };

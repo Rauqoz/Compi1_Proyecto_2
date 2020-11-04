@@ -141,6 +141,7 @@ function sintactico(tokens) {
 					pila.push('r_void');
 					pila.push('r_static');
 				} else if (tokens[ilex].tipo == 'r_void') {
+					precuperacion = 'linstrucciones';
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
 					pila.push('l_abrir');
@@ -150,6 +151,7 @@ function sintactico(tokens) {
 					pila.push('r_id');
 					pila.push('r_void');
 				} else if (ltipos(tokens[ilex].tipo) == true) {
+					precuperacion = 'linstrucciones';
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
 					pila.push('l_abrir');
@@ -187,6 +189,7 @@ function sintactico(tokens) {
 				if (tokens[ilex].tipo == 'r_coma') {
 					pila.push('parametros');
 					pila.push('r_id');
+					pila.push('ltipos');
 					pila.push('r_coma');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
 					console.log('era comentario');
@@ -487,6 +490,12 @@ function sintactico(tokens) {
 					pila.push('r_puntocoma');
 					pila.push('lexpresion');
 					pila.push('r_igual');
+				} else if (tokens[ilex].tipo == 'r_masmas') {
+					pila.push('r_puntocoma');
+					pila.push('r_masmas');
+				} else if (tokens[ilex].tipo == 'r_menosmenos') {
+					pila.push('r_puntocoma');
+					pila.push('r_menosmenos');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
 					console.log('era comentario');
 					ilex++;
@@ -764,26 +773,10 @@ function prueba() {
 var texto = `
 public class Hola{
 
-	public static void main(String[] args){
-	
-//PRINT
-System.out.fasdf print("hola");
-System.out.println(hola);
-System.out.println(true);
-System.out.porintln( -(1+1)*5/(85-96) );
-System.out.println(false);
-
-//IF
-if (hola==1){
-System.out.println(false);
-}
-else if(hola==2){
-System.out.println(true);
-}
-else{
-System.out.println(true);
-}
-
+	public void metodo(int a, int b, int c, int d){
+		
+		incremento++;
+		
 	}
 }
 

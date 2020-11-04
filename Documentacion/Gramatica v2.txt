@@ -109,6 +109,8 @@ valores:	r_coma lexpresion valores
 
 seleccionid: 	p_abrir lvalores p_cerrar r_puntocoma
 	|	r_igual lexpresion r_puntocoma
+	|	r_masmas r_puntocoma
+	|	r_menosmenos r_puntocoma
 ;
 
 lreturn: 	lexpresion r_puntocoma

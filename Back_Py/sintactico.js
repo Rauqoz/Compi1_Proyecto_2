@@ -57,7 +57,6 @@ function lexpresion(token) {
 function sintactico(tokens) {
 	var ilex = 0;
 	var tokenesperado = '',
-		precuperacion = '',
 		panico = '';
 	pila.splice(0, pila.length);
 	pila.push('start');
@@ -70,7 +69,6 @@ function sintactico(tokens) {
 			case 'lista':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_public') {
-					panico = 'r_public';
 					pila.push('lista');
 					pila.push('principal');
 					pila.push('r_public');
@@ -80,22 +78,17 @@ function sintactico(tokens) {
 					pila.push('lista');
 				} else {
 					//error
-					tokenesperado = 'r_public';
 				}
 				break;
 			case 'principal':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_class') {
-					panico = 'l_cerrar';
-					precuperacion = 'lmetodos';
 					pila.push('l_cerrar');
 					pila.push('lmetodos');
 					pila.push('l_abrir');
 					pila.push('r_id');
 					pila.push('r_class');
 				} else if (tokens[ilex].tipo == 'r_interface') {
-					precuperacion = 'definiciones';
-					panico = 'l_cerrar';
 					pila.push('l_cerrar');
 					pila.push('definiciones');
 					pila.push('l_abrir');
@@ -107,18 +100,15 @@ function sintactico(tokens) {
 					pila.push('principal');
 				} else {
 					//error
-					tokenesperado = 'r_class/r_interface';
 				}
 				break;
 			case 'lmetodos':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_public') {
-					panico = 'l_cerrar';
 					pila.push('lmetodos');
 					pila.push('metodos');
 					pila.push('r_public');
 				} else if (ltipos(tokens[ilex].tipo)) {
-					panico = 'l_cerrar';
 					pila.push('lmetodos');
 					pila.push('declaracion');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -127,14 +117,11 @@ function sintactico(tokens) {
 					pila.push('lmetodos');
 				} else {
 					//vacio
-					tokenesperado = 'r_public/tipos';
 				}
 				break;
 			case 'metodos':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_static') {
-					precuperacion = 'linstrucciones';
-					panico = 'l_cerrar';
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
 					pila.push('l_abrir');
@@ -148,8 +135,6 @@ function sintactico(tokens) {
 					pila.push('r_void');
 					pila.push('r_static');
 				} else if (tokens[ilex].tipo == 'r_void') {
-					precuperacion = 'linstrucciones';
-					panico = 'l_cerrar';
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
 					pila.push('l_abrir');
@@ -159,8 +144,6 @@ function sintactico(tokens) {
 					pila.push('r_id');
 					pila.push('r_void');
 				} else if (ltipos(tokens[ilex].tipo) == true) {
-					precuperacion = 'linstrucciones';
-					panico = 'l_cerrar';
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
 					pila.push('l_abrir');
@@ -175,13 +158,11 @@ function sintactico(tokens) {
 					pila.push('metodos');
 				} else {
 					//error
-					tokenesperado = 'r_static/r_void/tipos';
 				}
 				break;
 			case 'lparametros':
 				pila.pop();
 				if (ltipos(tokens[ilex].tipo) == true) {
-					panico = 'parametros';
 					pila.push('parametros');
 					pila.push('r_id');
 					pila.push('ltipos');
@@ -191,13 +172,11 @@ function sintactico(tokens) {
 					pila.push('lparametros');
 				} else {
 					//vacio
-					tokenesperado = 'tipos';
 				}
 				break;
 			case 'parametros':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_coma') {
-					panico = 'parametros';
 					pila.push('parametros');
 					pila.push('r_id');
 					pila.push('ltipos');
@@ -208,7 +187,6 @@ function sintactico(tokens) {
 					pila.push('parametros');
 				} else {
 					//vacio
-					tokenesperado = 'r_coma';
 				}
 				break;
 			case 'ltipos':
@@ -229,53 +207,42 @@ function sintactico(tokens) {
 					pila.push('ltipos');
 				} else {
 					//error
-					tokenesperado = 'tipos';
 				}
 				break;
 			case 'linstrucciones':
 				pila.pop();
 				if (ltipos(tokens[ilex].tipo) == true) {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('declaracion');
 				} else if (tokens[ilex].tipo == 'r_id') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('seleccionid');
 					pila.push('r_id');
 				} else if (tokens[ilex].tipo == 'r_return') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('lreturn');
 					pila.push('r_return');
 				} else if (tokens[ilex].tipo == 'r_continue') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('r_puntocoma');
 					pila.push('r_continue');
 				} else if (tokens[ilex].tipo == 'r_break') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('r_puntocoma');
 					pila.push('r_break');
 				} else if (tokens[ilex].tipo == 'r_system') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('prints');
 				} else if (tokens[ilex].tipo == 'r_if') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('mif');
 				} else if (tokens[ilex].tipo == 'r_for') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('mfor');
 				} else if (tokens[ilex].tipo == 'r_while') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('mwhile');
 				} else if (tokens[ilex].tipo == 'r_do') {
-					panico = 'linstrucciones';
 					pila.push('linstrucciones');
 					pila.push('mdo');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -284,11 +251,9 @@ function sintactico(tokens) {
 					pila.push('linstrucciones');
 				} else {
 					//vacio
-					tokenesperado = 'instrucciones';
 				}
 				break;
 			case 'declaracion':
-				panico = 'r_puntocoma';
 				pila.pop();
 				pila.push('r_puntocoma');
 				pila.push('ldeclaracion');
@@ -303,12 +268,10 @@ function sintactico(tokens) {
 			case 'ldeclaracion':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_coma') {
-					panico = 'ldeclaracion';
 					pila.push('ldeclaracion');
 					pila.push('r_id');
 					pila.push('r_coma');
 				} else if (tokens[ilex].tipo == 'r_igual') {
-					panico = 'mdeclaracion';
 					pila.push('mdeclaracion');
 					pila.push('lexpresion');
 					pila.push('r_igual');
@@ -318,13 +281,11 @@ function sintactico(tokens) {
 					pila.push('ldeclaracion');
 				} else {
 					//vacio
-					tokenesperado = 'r_coma/r_igual';
 				}
 				break;
 			case 'mdeclaracion':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_coma') {
-					panico = 'ldeclaracion';
 					pila.push('ldeclaracion');
 					pila.push('r_id');
 					pila.push('r_coma');
@@ -334,17 +295,14 @@ function sintactico(tokens) {
 					pila.push('mdeclaracion');
 				} else {
 					//vacio
-					tokenesperado = 'r_coma';
 				}
 				break;
 			case 'lexpresion':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_mas') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_mas');
 				} else if (tokens[ilex].tipo == 'r_menos') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_menos');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -358,34 +316,27 @@ function sintactico(tokens) {
 			case 'expresion':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_numero') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('r_numero');
 				} else if (tokens[ilex].tipo == 'r_cadena') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('r_cadena');
 				} else if (tokens[ilex].tipo == 'r_caracter') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('r_caracter');
 				} else if (booleano(tokens[ilex].tipo) == true) {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('booleano');
 				} else if (tokens[ilex].tipo == 'r_id') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('emetodo');
 					pila.push('r_id');
 				} else if (tokens[ilex].tipo == 'p_abrir') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('p_cerrar');
 					pila.push('lexpresion');
 					pila.push('p_abrir');
 				} else if (tokens[ilex].tipo == 'r_not') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('expresion');
 					pila.push('r_not');
@@ -395,69 +346,53 @@ function sintactico(tokens) {
 					pila.push('expresion');
 				} else {
 					//error
-					tokenesperado = 'expresion';
 				}
 				break;
 			case 'operacion':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_mas') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_mas');
 				} else if (tokens[ilex].tipo == 'r_menos') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_menos');
 				} else if (tokens[ilex].tipo == 'r_asterisco') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_asterisco');
 				} else if (tokens[ilex].tipo == 'r_diagonal') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_diagonal');
 				} else if (tokens[ilex].tipo == 'r_masmas') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('r_masmas');
 				} else if (tokens[ilex].tipo == 'r_menosmenos') {
-					panico = 'operacion';
 					pila.push('operacion');
 					pila.push('r_menosmenos');
 				} else if (tokens[ilex].tipo == 'r_menor') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_menor');
 				} else if (tokens[ilex].tipo == 'r_mayor') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_mayor');
 				} else if (tokens[ilex].tipo == 'r_mayorigual') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_mayorigual');
 				} else if (tokens[ilex].tipo == 'r_menorigual') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_menorigual');
 				} else if (tokens[ilex].tipo == 'r_igualigual') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_igualigual');
 				} else if (tokens[ilex].tipo == 'r_notigual') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_notigual');
 				} else if (tokens[ilex].tipo == 'r_and') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_and');
 				} else if (tokens[ilex].tipo == 'r_or') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_or');
 				} else if (tokens[ilex].tipo == 'r_xor') {
-					panico = 'expresion';
 					pila.push('expresion');
 					pila.push('r_xor');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -466,7 +401,6 @@ function sintactico(tokens) {
 					pila.push('operacion');
 				} else {
 					//vacio
-					tokenesperado = 'operacion';
 				}
 				break;
 			case 'booleano':
@@ -481,13 +415,11 @@ function sintactico(tokens) {
 					pila.push('booleano');
 				} else {
 					//error
-					tokenesperado = 'booleano';
 				}
 				break;
 			case 'emetodo':
 				pila.pop();
 				if (tokens[ilex].tipo == 'p_abrir') {
-					panico = 'p_cerrar';
 					pila.push('p_cerrar');
 					pila.push('lvalores');
 					pila.push('p_abrir');
@@ -497,13 +429,11 @@ function sintactico(tokens) {
 					pila.push('emetodo');
 				} else {
 					//vacio
-					tokenesperado = 'p_abrir';
 				}
 				break;
 			case 'lvalores':
 				pila.pop();
 				if (expresion(tokens[ilex].tipo) == true) {
-					panico = 'valores';
 					pila.push('valores');
 					pila.push('expresion');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -512,13 +442,11 @@ function sintactico(tokens) {
 					pila.push('lvalores');
 				} else {
 					//vacio
-					tokenesperado = 'expresion';
 				}
 				break;
 			case 'valores':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_coma') {
-					panico = 'valores';
 					pila.push('valores');
 					pila.push('lexpresion');
 					pila.push('r_coma');
@@ -528,28 +456,23 @@ function sintactico(tokens) {
 					pila.push('valores');
 				} else {
 					//vacio
-					tokenesperado = 'r_coma';
 				}
 				break;
 			case 'seleccionid':
 				pila.pop();
 				if (tokens[ilex].tipo == 'p_abrir') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('p_cerrar');
 					pila.push('lvalores');
 					pila.push('p_abrir');
 				} else if (tokens[ilex].tipo == 'r_igual') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('lexpresion');
 					pila.push('r_igual');
 				} else if (tokens[ilex].tipo == 'r_masmas') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('r_masmas');
 				} else if (tokens[ilex].tipo == 'r_menosmenos') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('r_menosmenos');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -558,17 +481,14 @@ function sintactico(tokens) {
 					pila.push('seleccionid');
 				} else {
 					//error
-					tokenesperado = 'p_abrir/r_igual';
 				}
 				break;
 			case 'lreturn':
 				pila.pop();
 				if (lexpresion(tokens[ilex].tipo) == true) {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('lexpresion');
 				} else if (tokens[ilex].tipo == 'r_puntocoma') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
 					console.log('era comentario');
@@ -576,13 +496,11 @@ function sintactico(tokens) {
 					pila.push('lreturn');
 				} else {
 					//error
-					tokenesperado = 'lexpresion/r_puntocoma';
 				}
 				break;
 			case 'prints':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_system') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('p_cerrar');
 					pila.push('lexpresion');
@@ -598,7 +516,6 @@ function sintactico(tokens) {
 					pila.push('prints');
 				} else {
 					//error
-					tokenesperado = 'r_system';
 				}
 				break;
 			case 'lprints':
@@ -614,7 +531,6 @@ function sintactico(tokens) {
 				}
 				break;
 			case 'mif':
-				panico = 'lif';
 				pila.pop();
 				pila.push('lif');
 				pila.push('l_cerrar');
@@ -633,7 +549,6 @@ function sintactico(tokens) {
 			case 'lif':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_else') {
-					panico = 'melse';
 					pila.push('melse');
 					pila.push('r_else');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -642,7 +557,6 @@ function sintactico(tokens) {
 					pila.push('lif');
 				} else {
 					//vacio
-					tokenesperado = 'r_else';
 				}
 				break;
 			case 'melse':
@@ -650,7 +564,6 @@ function sintactico(tokens) {
 				if (tokens[ilex].tipo == 'r_if') {
 					pila.push('mif');
 				} else if (tokens[ilex].tipo == 'l_abrir') {
-					panico = 'lif';
 					pila.push('lif');
 					pila.push('l_cerrar');
 					pila.push('linstrucciones');
@@ -661,11 +574,9 @@ function sintactico(tokens) {
 					pila.push('melse');
 				} else {
 					//error
-					tokenesperado = 'r_if/l_abrir';
 				}
 				break;
 			case 'mfor':
-				panico = 'l_cerrar';
 				pila.pop();
 				pila.push('l_cerrar');
 				pila.push('linstrucciones');
@@ -684,7 +595,6 @@ function sintactico(tokens) {
 				}
 				break;
 			case 'mwhile':
-				panico = 'l_cerrar';
 				pila.pop();
 				pila.push('l_cerrar');
 				pila.push('linstrucciones');
@@ -700,7 +610,6 @@ function sintactico(tokens) {
 				}
 				break;
 			case 'mdo':
-				panico = 'r_puntocoma';
 				pila.pop();
 				pila.push('r_puntocoma');
 				pila.push('p_cerrar');
@@ -720,11 +629,9 @@ function sintactico(tokens) {
 			case 'definiciones':
 				pila.pop();
 				if (ltipos(tokens[ilex].tipo) == true) {
-					panico = 'definiciones';
 					pila.push('definiciones');
 					pila.push('declaracion');
 				} else if (tokens[ilex].tipo == 'r_public') {
-					panico = 'lmetodosdefiniciones';
 					pila.push('lmetodosdefiniciones');
 					pila.push('r_public');
 				} else if (tokens[ilex].tipo == 'r_comentario') {
@@ -733,17 +640,14 @@ function sintactico(tokens) {
 					pila.push('definiciones');
 				} else {
 					//vacio
-					tokenesperado = 'r_public/tipos';
 				}
 				break;
 			case 'lmetodosdefiniciones':
 				pila.pop();
 				if (ltipos(tokens[ilex].tipo) == true) {
-					panico = 'lmetodosdefiniciones';
 					pila.push('lmetodosdefiniciones');
 					pila.push('declaracion');
 				} else if (tokens[ilex].tipo == 'r_public') {
-					panico = 'lmetodosdefiniciones';
 					pila.push('lmetodosdefiniciones');
 					pila.push('metodosdefiniciones');
 					pila.push('r_public');
@@ -753,13 +657,11 @@ function sintactico(tokens) {
 					pila.push('lmetodosdefiniciones');
 				} else {
 					//vacio
-					tokenesperado = 'r_public/tipos';
 				}
 				break;
 			case 'metodosdefiniciones':
 				pila.pop();
 				if (tokens[ilex].tipo == 'r_public') {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('p_cerrar');
 					pila.push('lparametros');
@@ -767,7 +669,6 @@ function sintactico(tokens) {
 					pila.push('r_id');
 					pila.push('r_void');
 				} else if (ltipos(tokens[ilex].tipo) == true) {
-					panico = 'r_puntocoma';
 					pila.push('r_puntocoma');
 					pila.push('p_cerrar');
 					pila.push('lparametros');
@@ -780,7 +681,6 @@ function sintactico(tokens) {
 					pila.push('metodosdefiniciones');
 				} else {
 					//error
-					tokenesperado = 'r_public/tipos';
 				}
 				break;
 
@@ -801,25 +701,6 @@ function sintactico(tokens) {
 					console.log('Error con: ' + tokens[ilex].palabra + ' en lugar de ' + tokenesperado);
 					erroresSinctacticos.push(new errorS(tokens[ilex].palabra, tokenesperado, tokens[ilex].fila));
 					console.log('panico ' + panico);
-
-					while (tokens[ilex].tipo != 'r_puntocoma' && tokens[ilex].tipo != 'l_cerrar') {
-						if (tokens[ilex + 1].tipo == 'r_puntocoma') {
-							pila.push('r_puntocoma');
-						} else if (tokens[ilex + 1].tipo == 'l_cerrar') {
-							pila.push('l_cerrar');
-						}
-						ilex++;
-					}
-					ilex++;
-					while (pila[pila.length - 1] != panico) {
-						pila.pop();
-					}
-					pila.pop();
-					console.log('pila');
-					console.log(pila);
-					if (precuperacion.length != 0) {
-						pila.push(precuperacion);
-					}
 				}
 				break;
 		}
@@ -843,13 +724,18 @@ function prueba() {
 }
 
 var texto = `
-public class Hola{
+public class Hola {
 
-	pubdlic void metodo(int a, int b, int c, int d){
-		
-		incremento++;
-		
+	int a ;
+
+	public void metodo(){
+
 	}
+}
+
+public interface hola2{
+
+
 }
 
 

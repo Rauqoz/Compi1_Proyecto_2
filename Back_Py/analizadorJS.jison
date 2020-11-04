@@ -185,8 +185,8 @@ operacion:	r_mas expresion
 	|	r_menos expresion
 	|	r_asterisco expresion
 	|	r_diagonal expresion
-	|	r_masmas expresion
-	|	r_menosmenos expresion
+	|	r_masmas operacion
+	|	r_menosmenos operacion
 	|	r_menor expresion
 	|	r_mayor expresion
 	|	r_mayorigual expresion
@@ -208,20 +208,17 @@ emetodo:	p_abrir lvalores p_cerrar
 ;
 
 lvalores:	expresion valores
-	|	declaracion valores
 	|	
 ;
 
-valores:	p_coma mvalores
+valores:	r_coma lexpresion valores
 	|	
 ;
 
-mvalores:	expresion lvalores
-	|	declaracion lvalores
-;
-
-seleccionid: 	p_abrir lvalores p_cerrar p_puntocoma
-	|	r_igual lexpresion p_puntocoma
+seleccionid: 	p_abrir lvalores p_cerrar r_puntocoma
+	|	r_igual lexpresion r_puntocoma
+	|	r_masmas r_puntocoma
+	|	r_menosmenos r_puntocoma
 ;
 
 lreturn: 	lexpresion r_puntocoma

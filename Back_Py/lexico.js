@@ -42,7 +42,7 @@ function lexico(texto) {
 	var isNumero = /[0-9]/i;
 	var isSpace = /\s|\t/i;
 	var isSaltoLine = /\n/i;
-	var isSimbolo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;|\(|\)|\{|\}|\[|\]|\"|\']/i;
+	var isSimbolo = /[\%|\+|\-|\*|\/|\<|\>|\=|\!|\&|\||\^|\,|\:|\;|\(|\)|\{|\}|\[|\]|\"|\'|\.]/i;
 
 	var simbolos = [
 		[ '%', 'r_modular' ],
@@ -71,7 +71,8 @@ function lexico(texto) {
 		[ '{', 'l_abrir' ],
 		[ '}', 'l_cerrar' ],
 		[ '[', 'c_abrir' ],
-		[ ']', 'c_cerrar' ]
+		[ ']', 'c_cerrar' ],
+		[ '.', 'r_punto' ]
 	];
 
 	var reservadas = [

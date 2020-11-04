@@ -1,3 +1,3 @@
-for (let i in pila) {
-	// 	console.log(pila[i]);
-	// }
+cuperacion.length != 0) {
+					// 	pila.push(precuperacion);
+					// }

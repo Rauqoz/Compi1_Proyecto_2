@@ -47,7 +47,6 @@ function a_ambos() {
 		case 'p4':
 			console.log(window.code4.getDoc().getValue());
 			break;
-
 		default:
 			alert('Escoge Primero un Tab');
 			break;

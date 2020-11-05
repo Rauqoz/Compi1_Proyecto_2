@@ -3,11 +3,11 @@ class nodo {
 		this.id = 0;
 		this.tTraducido = tTraducido;
 		this.tTipo = tTipo;
-		this.nodos = [];
+		this.nodos = new Array();
 	}
 
 	pushHijo(hijo) {
-		this.nodo.push(hijo);
+		this.nodos.push(hijo);
 	}
 }
 

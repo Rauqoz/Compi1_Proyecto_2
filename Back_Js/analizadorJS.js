@@ -117,7 +117,7 @@ case 3:
             this.$ = new nodo("","lista");
 			this.$.pushHijo("","Error");
 			this.$.pushHijo($$[$0]);
-			sintacticoMalos.push(new errorSintactico($$[$0-2],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-2],"error en lista",this._$.first_line,this._$.first_column));
 	
 break;
 case 4:
@@ -149,7 +149,7 @@ case 7:
 
             this.$ = new nodo("","principal");
 			this.$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-1],"error en principal",this._$.first_line,this._$.first_column));
 	
 break;
 case 8:
@@ -180,7 +180,7 @@ case 11:
             this.$ = new nodo("","lmetodosdefiniciones");
 			this.$.pushHijo("","Error");
 			this.$.pushHijo($$[$0]);
-			sintacticoMalos.push(new errorSintactico($$[$0-2],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-2],"error en lmetodosdefiniciones",this._$.first_line,this._$.first_column));
 	
 break;
 case 12:
@@ -209,7 +209,7 @@ case 14:
 
             this.$ = new nodo("","metodosdefiniciones");
 			this.$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-1],"error en metodosdefiniciones",this._$.first_line,this._$.first_column));
 	
 break;
 case 15:
@@ -240,7 +240,7 @@ case 18:
             this.$ = new nodo("","lmetodos");
 			this.$.pushHijo("","Error");
 			this.$.pushHijo($$[$0]);
-			sintacticoMalos.push(new errorSintactico($$[$0-2],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-2],"error en lmetodos",this._$.first_line,this._$.first_column));
 	
 break;
 case 19: case 20:
@@ -293,7 +293,7 @@ case 24:
 
             this.$ = new nodo("","metodos");
 			this.$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-1],"error en metodos",this._$.first_line,this._$.first_column));
 	
 break;
 case 25:
@@ -367,7 +367,7 @@ case 34:
 
             this.$ = new nodo("","ltipos");
 			this.$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($$[$0],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0],"error en ltipos",this._$.first_line,this._$.first_column));
 	
 break;
 case 35: case 40: case 41: case 42: case 43: case 44:
@@ -422,7 +422,7 @@ case 46:
             this.$ = new nodo("","linstrucciones");
 			this.$.pushHijo("","Error");
 			this.$.pushHijo(new nodo($$[$0],"reclinstrucciones"));
-			sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-1],"error en linstrucciones",this._$.first_line,this._$.first_column));
 	
 break;
 case 47:
@@ -450,7 +450,7 @@ case 50:
 
 				this.$ = new nodo("","declaracion");
 				this.$.pushHijo("","Error");
-				sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+				sintacticoMalos.push(new errorSintactico($$[$0-1],"error en declaracion",this._$.first_line,this._$.first_column));
 	
 break;
 case 51:
@@ -561,7 +561,7 @@ case 66:
 
 			this.$ = new nodo("","expresion");
 			this.$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($$[$0-1],"error en expresion",this._$.first_line,this._$.first_column));
 	
 break;
 case 67: case 68:
@@ -766,7 +766,7 @@ case 97:
 
 		this.$ = new nodo("","seleccionid");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en seleccionid",this._$.first_line,this._$.first_column));
 	
 break;
 case 98:
@@ -821,7 +821,7 @@ case 103:
 
 		this.$ = new nodo("","mif");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en mif",this._$.first_line,this._$.first_column));
 	
 break;
 case 104:
@@ -864,7 +864,7 @@ case 108:
 
 		this.$ = new nodo("","melse");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en melse",this._$.first_line,this._$.first_column));
 	
 break;
 case 109:
@@ -889,7 +889,7 @@ case 110:
 
 		this.$ = new nodo("","mfor");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en mfor",this._$.first_line,this._$.first_column));
 	
 break;
 case 111:
@@ -910,7 +910,7 @@ case 112:
 
 		this.$ = new nodo("","mwhile");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en mwhile",this._$.first_line,this._$.first_column));
 	
 break;
 case 113:
@@ -933,7 +933,7 @@ case 114:
 
 		this.$ = new nodo("","mdo");
 		this.$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($$[$0-1],"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($$[$0-1],"error en mdo",this._$.first_line,this._$.first_column));
 	
 break;
 }
@@ -1216,10 +1216,10 @@ _handle_error:
 		}
 	}
 
-	var tokensBuenos = [];
-	var tokensMalos = [];
-	var sintacticoBuenos = [];
-	var sintacticoMalos = [];
+	var tokensBuenos = new Array();
+	var tokensMalos = new Array();
+	var sintacticoBuenos = new Array();
+	var sintacticoMalos = new Array();
 	
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){

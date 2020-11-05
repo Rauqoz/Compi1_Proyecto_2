@@ -33,10 +33,10 @@
 		}
 	}
 
-	var tokensBuenos = [];
-	var tokensMalos = [];
-	var sintacticoBuenos = [];
-	var sintacticoMalos = [];
+	var tokensBuenos = new Array();
+	var tokensMalos = new Array();
+	var sintacticoBuenos = new Array();
+	var sintacticoMalos = new Array();
 	
 %}
 
@@ -162,7 +162,7 @@ lista:lista	r_public principal  {
             $$ = new nodo("","lista");
 			$$.pushHijo("","Error");
 			$$.pushHijo($3);
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en lista",this._$.first_line,this._$.first_column));
 	}
 	| EOF {
 		$$ = new nodo("","lista");
@@ -188,7 +188,7 @@ principal:	r_class r_id l_abrir lmetodos {
 
             $$ = new nodo("","principal");
 			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en principal",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -213,7 +213,7 @@ lmetodosdefiniciones:	lmetodosdefiniciones r_public metodosdefiniciones {
             $$ = new nodo("","lmetodosdefiniciones");
 			$$.pushHijo("","Error");
 			$$.pushHijo($3);
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en lmetodosdefiniciones",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -238,7 +238,7 @@ metodosdefiniciones:	r_void r_id p_abrir lparametros r_puntocoma {
 
             $$ = new nodo("","metodosdefiniciones");
 			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en metodosdefiniciones",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -263,7 +263,7 @@ lmetodos:	lmetodos r_public metodos  {
             $$ = new nodo("","lmetodos");
 			$$.pushHijo("","Error");
 			$$.pushHijo($3);
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en lmetodos",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -311,7 +311,7 @@ metodos:	r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerra
 
             $$ = new nodo("","metodos");
 			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en metodos",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -371,7 +371,7 @@ ltipos:		r_int {
 
             $$ = new nodo("","ltipos");
 			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en ltipos",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -439,7 +439,7 @@ linstrucciones:		linstrucciones declaracion {
             $$ = new nodo("","linstrucciones");
 			$$.pushHijo("","Error");
 			$$.pushHijo(new nodo($2,"reclinstrucciones"));
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en linstrucciones",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -464,7 +464,7 @@ declaracion: ltipos r_id ldeclaracion r_puntocoma {
 
 				$$ = new nodo("","declaracion");
 				$$.pushHijo("","Error");
-				sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+				sintacticoMalos.push(new errorSintactico($1,"error en declaracion",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -551,7 +551,7 @@ expresion:	r_numero operacion {
 
 			$$ = new nodo("","expresion");
 			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+			sintacticoMalos.push(new errorSintactico($1,"error en expresion",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -713,7 +713,7 @@ seleccionid: 	p_abrir lvalores p_cerrar r_puntocoma {
 
 		$$ = new nodo("","seleccionid");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en seleccionid",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -762,7 +762,7 @@ mif:		r_if p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar lif {
 
 		$$ = new nodo("","mif");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en mif",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -799,7 +799,7 @@ melse:		r_if p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar lif {
 
 		$$ = new nodo("","melse");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en melse",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -822,7 +822,7 @@ mfor:		r_for p_abrir declaracion lexpresion r_puntocoma lexpresion p_cerrar l_ab
 
 		$$ = new nodo("","mfor");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en mfor",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -841,7 +841,7 @@ mwhile:		r_while p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar {
 
 		$$ = new nodo("","mwhile");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en mwhile",this._$.first_line,this._$.first_column));
 	}
 ;
 
@@ -862,7 +862,7 @@ mdo:		r_do l_abrir linstrucciones l_cerrar r_while p_abrir lexpresion p_cerrar r
 
 		$$ = new nodo("","mdo");
 		$$.pushHijo("","Error");
-		sintacticoMalos.push(new errorSintactico($1,"r_public",this._$.first_line,this._$.first_column));
+		sintacticoMalos.push(new errorSintactico($1,"error en mdo",this._$.first_line,this._$.first_column));
 	}
 
 ;

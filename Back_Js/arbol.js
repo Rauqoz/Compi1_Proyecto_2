@@ -1,8 +1,8 @@
 class nodo {
-	constructor(token, tipo) {
+	constructor(tTraducido, tTipo) {
 		this.id = 0;
-		this.token = token;
-		this.tipo = tipo;
+		this.tTraducido = tTraducido;
+		this.tTipo = tTipo;
 		this.nodos = [];
 	}
 

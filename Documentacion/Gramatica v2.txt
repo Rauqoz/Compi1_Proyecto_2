@@ -6,7 +6,7 @@ lista:	r_public principal lista
 ;
 
 principal:	r_class r_id l_abrir lmetodos l_cerrar
-	|	r_interface r_id l_abrir definiciones l_cerrar
+	|	r_interface r_id l_abrir lmetodosdefiniciones l_cerrar
 ;
 
 lmetodos:	r_public metodos lmetodos
@@ -146,11 +146,6 @@ mwhile:		r_while p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar
 ;
 
 mdo:		r_do l_abrir linstrucciones l_cerrar r_while p_abrir lexpresion p_cerrar r_puntocoma
-;
-
-definiciones:	declaracion definiciones
-	|	r_public lmetodosdefiniciones
-	|	
 ;
 
 lmetodosdefiniciones:	r_public metodosdefiniciones lmetodosdefiniciones

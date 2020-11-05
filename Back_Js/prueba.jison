@@ -1,11 +1,7 @@
 /* description: Prueba Base */
-
-
 /* lexical grammar */
 %lex
 %%
-
-
 
 \s+                   /* skip whitespace */
 [0-9]+('.'[0-9]+)?     {return 'numero'; console.log("numero");}

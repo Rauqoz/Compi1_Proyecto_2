@@ -54,7 +54,7 @@
 
 "true"				    { tokensBuenos.push( new token(yytext,"r_true",yylloc.first_line, yylloc.first_column)); return 'r_true';}
 "false"				    { tokensBuenos.push( new token(yytext,"r_false",yylloc.first_line, yylloc.first_column)); return 'r_false';}
-"int"				    { tokensBuenos.push( new token(yytext,"r_int",yylloc.first_line, yylloc.first_column)); return 'r_entero';}
+"int"				    { tokensBuenos.push( new token(yytext,"r_int",yylloc.first_line, yylloc.first_column)); return 'r_int';}
 "string"			    { tokensBuenos.push( new token(yytext,"r_string",yylloc.first_line, yylloc.first_column)); return 'r_string';}
 "double"			    { tokensBuenos.push( new token(yytext,"r_double",yylloc.first_line, yylloc.first_column)); return 'r_double';}
 "bool"				    { tokensBuenos.push( new token(yytext,"r_bool",yylloc.first_line, yylloc.first_column)); return 'r_bool';}
@@ -249,11 +249,12 @@ lmetodos:	 r_public metodos  lmetodos{
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
-	|	 ltipos declaracion  lmetodos{
+	|	ltipos declaracion  lmetodos{
 		$$ = new nodo("","lmetodos");
 		$$.pushHijo($1);
 		$$.pushHijo($2);
 		$$.pushHijo($3);
+		console.log("entro a tipos");
 	}
 	| l_cerrar	{
 		$$ = new nodo("","lmetodos");
@@ -346,6 +347,7 @@ parametros:	 r_coma ltipos r_id parametros{
 ltipos:		r_int {
 		$$ = new nodo("","ltipos");
 		$$.pushHijo(new nodo("var ","r_int"));
+		console.log("es int");
 
 }
 	|	r_double {
@@ -552,13 +554,13 @@ expresion:	r_numero operacion {
 	$$.pushHijo(new nodo($1,"r_not"));
 	$$.pushHijo($2);
 	}
-	|	error recexpresion {
+	/* |	error recexpresion {
 			console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
 
 			$$ = new nodo("","expresion");
 			$$.pushHijo("","Error");
 			sintacticoMalos.push(new errorSintactico($1,"error en expresion",this._$.first_line,this._$.first_column));
-	}
+	} */
 ;
 
 recexpresion: r_puntocoma {

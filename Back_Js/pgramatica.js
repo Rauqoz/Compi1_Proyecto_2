@@ -1,11 +1,24 @@
 const parser = require('./analizadorJS');
-const nodo = require('./arbol');
 
-function prueba() {
-	var todo = parser.parse(`public class hola {
-
-    }`);
-	console.log(todo);
+var todo = parser.parse(`
+public class Hola{
+    int x = 3+3/5*(3+3);
+    public static void main(String[] args){
+        if(X==Y){
+            String A = "xD";
+            char B = 'B';
+            double C = 1.1;
+        }else{
+            
+        }
+    }
 }
 
-prueba();
+`);
+
+function prueba(ar) {
+	console.log('----------------------');
+	console.log(ar);
+}
+
+prueba(todo);

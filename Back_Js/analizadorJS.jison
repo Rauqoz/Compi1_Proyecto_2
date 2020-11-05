@@ -198,10 +198,11 @@ lmetodosdefiniciones:	 r_public metodosdefiniciones lmetodosdefiniciones {
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
-	|	 declaracion lmetodosdefiniciones{
+	|	  ltipos declaracion lmetodosdefiniciones{
 	$$ = new nodo("","lmetodosdefiniciones");
 	$$.pushHijo($1);
 	$$.pushHijo($2);
+	$$.pushHijo($3);
 }
 	| l_cerrar	{
 		$$ = new nodo("","lmetodosdefiniciones");
@@ -248,10 +249,11 @@ lmetodos:	 r_public metodos  lmetodos{
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
-	|	 declaracion  lmetodos{
+	|	 ltipos declaracion  lmetodos{
 		$$ = new nodo("","lmetodos");
 		$$.pushHijo($1);
 		$$.pushHijo($2);
+		$$.pushHijo($3);
 	}
 	| l_cerrar	{
 		$$ = new nodo("","lmetodos");
@@ -375,10 +377,11 @@ ltipos:		r_int {
 	}
 ;
 
-linstrucciones:		 declaracion linstrucciones{
+linstrucciones:	 ltipos declaracion linstrucciones{
 	$$ = new nodo("","linstrucciones");
 	$$.pushHijo($1);
 	$$.pushHijo($2);
+	$$.pushHijo($3);
 }
 	|	 r_id seleccionid linstrucciones{
 	$$ = new nodo("","linstrucciones");
@@ -456,13 +459,19 @@ reclinstrucciones: l_cerrar {
 ;
 
 
-declaracion: ltipos r_id ldeclaracion r_puntocoma {
+declaracion:  r_id ldeclaracion r_puntocoma {
 	$$ = new nodo("","declaracion");
-	$$.pushHijo($1);
-	$$.pushHijo(new nodo($2,"r_id"));
-	$$.pushHijo($3);
+	$$.pushHijo(new nodo($1,"r_id"));
+	$$.pushHijo($2);
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
+	| error r_puntocoma {
+		console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
+
+            $$ = new nodo("","declaracion");
+			$$.pushHijo("","Error");
+			sintacticoMalos.push(new errorSintactico($1,"error en declaracion",this._$.first_line,this._$.first_column));
+	}
 ;
 
 ldeclaracion:	r_coma r_id ldeclaracion {
@@ -799,19 +808,20 @@ melse:		r_if p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar lif {
 	}
 ;
 
-mfor:		r_for p_abrir declaracion lexpresion r_puntocoma lexpresion p_cerrar l_abrir linstrucciones l_cerrar {
+mfor:		r_for p_abrir ltipos declaracion lexpresion r_puntocoma lexpresion p_cerrar l_abrir linstrucciones l_cerrar {
 	$$ = new nodo("","mfor");
 	$$.pushHijo(new nodo($1,"r_for"));
 	$$.pushHijo(new nodo($2,"p_abrir"));
 	$$.pushHijo($3);
-	$$.nodos[2].nodos[3].tTraducido = ";";
 	$$.pushHijo($4);
-	$$.pushHijo(new nodo($5,"r_puntocoma"));
-	$$.pushHijo($6);
-	$$.pushHijo(new nodo($7,"p_cerrar"));
-	$$.pushHijo(new nodo($8,"l_abrir"));
-	$$.pushHijo($9);
-	$$.pushHijo(new nodo($10,"l_cerrar"));
+	$$.nodos[3].nodos[2].tTraducido = ";";
+	$$.pushHijo($5);
+	$$.pushHijo(new nodo($6,"r_puntocoma"));
+	$$.pushHijo($7);
+	$$.pushHijo(new nodo($8,"p_cerrar"));
+	$$.pushHijo(new nodo($9,"l_abrir"));
+	$$.pushHijo($10);
+	$$.pushHijo(new nodo($11,"l_cerrar"));
 }
 	|	error l_cerrar {
 		console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);

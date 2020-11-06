@@ -3,6 +3,7 @@
 // TAB
 
 var tabActiva;
+
 function openTab(evt, tab) {
 	// Declare all variables
 	var i, tabcontent, tablinks;
@@ -37,6 +38,7 @@ function tabGuardar() {
 }
 
 function tabAmbos() {
+	console.log('Tab Ambos');
 	// editor.getDoc().setValue(editor.getDoc().getValue() + "var ");
 	// console.log(editor.getDoc().getValue());
 	// switch (tabActiva) {
@@ -56,7 +58,6 @@ function tabAmbos() {
 	// 		alert('Escoge Primero un Tab');
 	// 		break;
 	// }
-	console.log('Tab Ambos');
 }
 
 function tabJs() {
@@ -68,5 +69,5 @@ function tabPy() {
 }
 
 function tabPrueba() {
-	console.log('Tab Prueba');
+	console.log('Tab Prueba cambiado 2');
 }

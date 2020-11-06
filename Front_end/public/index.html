@@ -12,6 +12,7 @@
     <script src="mode/javascript/javascript.js"></script>
     <!-- mios -->
     <link href="index.css" type="text/css" rel="stylesheet" />
+    <script src="scripts.js"></script>
   </head>
   <body>
     <!-- parte del menu -->
@@ -22,9 +23,9 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#" onclick="a_open()">Abrir</a>
-          <a href="#" onclick="a_nuevo()">Nuevo</a>
-          <a href="#" onclick="a_guardar()">Guardar</a>
+          <a  onclick="tabOpen()" href="#">Abrir</a>
+          <a  onclick="tabNuevo()" href="#">Nuevo</a>
+          <a  onclick="tabGuardar()" href="#">Guardar</a>
         </div>
       </div>
 
@@ -34,10 +35,10 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#" onclick="a_ambos()">Ambos</a>
-          <a href="#" onclick="a_js()">JavaScript</a>
-          <a href="#" onclick="a_py()">Python</a>
-          <a href="#" onclick="a_prueba()">Prueba</a>
+          <a  onclick="tabAmbos()" href="#">Ambos</a>
+          <a  onclick="tabJs()" href="#">JavaScript</a>
+          <a  onclick="tabPy()" href="#">Python</a>
+          <a  onclick="tabPrueba()" href="#">Prueba</a>
         </div>
       </div>
     </div>
@@ -137,7 +138,6 @@
       );
 
     </script>
-    <script src="index.js"></script>
 
   </body>
 </html>

@@ -26,29 +26,47 @@ function openTab(evt, tab) {
 	evt.currentTarget.className += ' active';
 }
 
-function a_prueba() {
-	console.log('Pestaña ' + tabActiva);
-	console.log(window.code1.getDoc().getValue());
+function tabOpen() {
+	console.log('Tab Open');
+}
+function tabNuevo() {
+	console.log('Tab Nuevo');
+}
+function tabGuardar() {
+	console.log('Tab Guardar');
 }
 
-function a_ambos() {
+function tabAmbos() {
 	// editor.getDoc().setValue(editor.getDoc().getValue() + "var ");
 	// console.log(editor.getDoc().getValue());
-	switch (tabActiva) {
-		case 'p1':
-			console.log(window.code1.getDoc().getValue());
-			break;
-		case 'p2':
-			console.log(window.code2.getDoc().getValue());
-			break;
-		case 'p3':
-			console.log(window.code3.getDoc().getValue());
-			break;
-		case 'p4':
-			console.log(window.code4.getDoc().getValue());
-			break;
-		default:
-			alert('Escoge Primero un Tab');
-			break;
-	}
+	// switch (tabActiva) {
+	// 	case 'p1':
+	// 		console.log(window.code1.getDoc().getValue());
+	// 		break;
+	// 	case 'p2':
+	// 		console.log(window.code2.getDoc().getValue());
+	// 		break;
+	// 	case 'p3':
+	// 		console.log(window.code3.getDoc().getValue());
+	// 		break;
+	// 	case 'p4':
+	// 		console.log(window.code4.getDoc().getValue());
+	// 		break;
+	// 	default:
+	// 		alert('Escoge Primero un Tab');
+	// 		break;
+	// }
+	console.log('Tab Ambos');
+}
+
+function tabJs() {
+	console.log('Tab Js');
+}
+
+function tabPy() {
+	console.log('Tab Py');
+}
+
+function tabPrueba() {
+	console.log('Tab Prueba');
 }

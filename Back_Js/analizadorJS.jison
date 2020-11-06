@@ -46,9 +46,9 @@
 
 %%
 
-\s+											//  espacios en blanco
-"//"[\n]*									// comentario
-[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]			// comentario multiple
+\s+										/* r_espacio */
+"//".*									{tokensBuenos.push( new token(yytext,"r_comentario",yylloc.first_line, yylloc.first_column));} //r_comentario
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]	 	{tokensBuenos.push( new token(yytext,"r_comentario",yylloc.first_line, yylloc.first_column));} //r_comentario
 
 
 "true"				    { tokensBuenos.push( new token(yytext,"r_true",yylloc.first_line, yylloc.first_column)); return 'r_true';}
@@ -113,7 +113,7 @@
 \"(.)*\"                        {yytext = yytext.substr(1,yyleng-2); tokensBuenos.push( new token(yytext,"r_cadena",yylloc.first_line, yylloc.first_column)); return 'r_cadena';}
 \'[a-zA-Z]\'                    {yytext = yytext.substr(1,yyleng-2); tokensBuenos.push( new token(yytext,"r_caracter",yylloc.first_line, yylloc.first_column)); return 'r_caracter';}
 [0-9]+(\.[0-9]+)?\b             { tokensBuenos.push( new token(yytext,"r_numero",yylloc.first_line, yylloc.first_column)); return 'r_numero';}
-[a-zA-Z]([a-zA-Z|0-9|_])*	    { tokensBuenos.push( new token(yytext,"r_id",yylloc.first_line, yylloc.first_column)); return 'r_id';}
+[a-zA-Z]([a-zA-Z|0-9|\_])*	    { tokensBuenos.push( new token(yytext,"r_id",yylloc.first_line, yylloc.first_column)); return 'r_id';}
 
 <<EOF>>				    return 'EOF';
 
@@ -125,7 +125,7 @@
 %left r_mas r_menos
 %left r_asterisco r_diagonal
 %left p_abrir p_cerrar
-%left UMENOS 
+%left UMENOS UMAS
 
 %start start
 %% /* Gramática */
@@ -179,15 +179,15 @@ principal:	r_class r_id l_abrir lmetodos l_cerrar  {
 		$$.pushHijo( new nodo( "", "r_interface"));
 		$$.pushHijo(new nodo("","r_id"));
 		$$.pushHijo(new nodo("","l_abrir"));
-        $$.pushHijo($5);
+        $$.pushHijo($4);
 		$$.pushHijo(new nodo("","l_cerrar"));
 	}
-    // | error l_cerrar{
-    //     console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
-    //     $$ = new nodo("","principal");
-    //     $$.pushHijo(new nodo("","error"));
-    //     sintacticoMalos.push(new errorSintactico($1,"error en principal",this._$.first_line,this._$.first_column));
-    // }
+    /* | error l_cerrar{
+        console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
+        $$ = new nodo("","principal");
+        $$.pushHijo(new nodo("","error"));
+        sintacticoMalos.push(new errorSintactico($1,"error en principal",this._$.first_line,this._$.first_column));
+    } */
     
 ;
 lmetodosdefiniciones:	 r_public metodosdefiniciones lmetodosdefiniciones {
@@ -233,12 +233,13 @@ metodosdefiniciones:	r_void r_id p_abrir lparametros r_puntocoma {
 	$$.pushHijo($4);
 	$$.pushHijo(new nodo("","r_puntocoma"));
 }
-	// | error l_cerrar {
+//temporal
+	// | error r_puntocoma {
 	// 	console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
 
-    //         $$ = new nodo("","metodosdefiniciones");
+    //         $$ = new nodo("","lmetodosdefiniciones");
 	// 		$$.pushHijo("","Error");
-	// 		sintacticoMalos.push(new errorSintactico($1,"error en metodosdefiniciones",this._$.first_line,this._$.first_column));
+	// 		sintacticoMalos.push(new errorSintactico($1,"error en lmetodosdefiniciones",this._$.first_line,this._$.first_column));
 	// }
 ;
 
@@ -259,8 +260,8 @@ lmetodos:	 r_public metodos  lmetodos{
     |   error l_cerrar lmetodos{
         console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
         $$ = new nodo("","lmetodos");
-        $$.pushHijo(new nodo("","error"));
         $$.pushHijo($3);
+        $$.pushHijo(new nodo("","error"));
         sintacticoMalos.push(new errorSintactico($1,"error en lista",this._$.first_line,this._$.first_column));
     }
 ;
@@ -302,12 +303,14 @@ metodos:	r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerra
 		$$.pushHijo($7);
 		$$.pushHijo(new nodo("\t" + $8 + "\n","l_cerrar"));
 	}
-	// | error l_cerrar {
-	// 	console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
-    //         $$ = new nodo("","metodos");
-	// 		$$.pushHijo("","error");
-	// 		sintacticoMalos.push(new errorSintactico($1,"error en metodos",this._$.first_line,this._$.first_column));
-	// }
+	//temporal
+	// |   error l_cerrar lmetodos{
+    //     console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
+    //     $$ = new nodo("","lmetodos");
+    //     $$.pushHijo(new nodo("","error"));
+    //     $$.pushHijo($3);
+    //     sintacticoMalos.push(new errorSintactico($1,"error en lista",this._$.first_line,this._$.first_column));
+    // }
 ;
 
 lparametros:	ltipos r_id parametros {
@@ -414,7 +417,7 @@ linstrucciones:	 ltipos declaracion linstrucciones{
 	|	 r_if mif linstrucciones{
 		console.log("entro a if");
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_if"));
+	$$.pushHijo(new nodo("\t" + $1 + " ","r_if"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
@@ -522,12 +525,12 @@ mdeclaracion:	r_coma r_id ldeclaracion {
 ;
 
 
-lexpresion:	r_mas expresion {
+lexpresion:	r_mas expresion %prec UMAS {
 	$$ = new nodo("","lexpresion");
 	$$.pushHijo(new nodo($1 + "","r_mas"));
 	$$.pushHijo($2);
 }
-	|	r_menos expresion {
+	|	r_menos expresion %prec UMENOS {
 	$$ = new nodo("","lexpresion");
 	$$.pushHijo(new nodo($1 + "","r_menos"));
 	$$.pushHijo($2);
@@ -663,13 +666,6 @@ operacion:	r_mas expresion {
 	|	{
 	$$ = new nodo("","operacion");
 }
-   /*  | error r_puntocoma {
-		console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
-
-            $$ = new nodo("","ldeclaracion");
-			$$.pushHijo("","Error");
-			sintacticoMalos.push(new errorSintactico($1,"error en declaracion",this._$.first_line,this._$.first_column));
-	} */
 ;
 
 booleano:	r_true {
@@ -762,31 +758,38 @@ mif:	 p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar lif {
 	$$.pushHijo(new nodo($1 + " ", "p_abrir"));
 	$$.pushHijo($2);
 	$$.pushHijo(new nodo($3 + " ", "p_cerrar"));
-	$$.pushHijo(new nodo($4 + "\n\t", "l_abrir"));
+	$$.pushHijo(new nodo($4 + "\n", "l_abrir"));
 	$$.pushHijo($5);
-	$$.pushHijo(new nodo("\t" + $6 + "\n", "l_cerrar"));
+	$$.pushHijo(new nodo("\t\t" + $6 + "", "l_cerrar"));
 	$$.pushHijo($7);
 }
 ;
 
 lif:		r_else melse {
+	console.log("es un else");
 	$$ = new nodo("","lif");
-	$$.pushHijo(new nodo("\t" + $1 + " " , "r_else"));
+	$$.pushHijo(new nodo(" " + $1 + " " , "r_else"));
 	$$.pushHijo($2);
 }
 	|	{$$ = new nodo("","lif");}
 ;
 
-melse:		r_if mif {
+melse:		r_if p_abrir lexpresion p_cerrar l_abrir linstrucciones l_cerrar lif {
 	$$ = new nodo("","melse");
 	$$.pushHijo(new nodo($1 + " " , "r_if"));
-	$$.pushHijo($2);
+	$$.pushHijo(new nodo($2 + " ", "p_abrir"));
+	$$.pushHijo($3);
+	$$.pushHijo(new nodo($4 + " ", "p_cerrar"));
+	$$.pushHijo(new nodo($5 + "\n", "l_abrir"));
+	$$.pushHijo($6);
+	$$.pushHijo(new nodo("\t\t" + $7 + "", "l_cerrar"));
+	$$.pushHijo($8);
 }
 	|	l_abrir linstrucciones l_cerrar lif {
 	$$ = new nodo("","melse");
 	$$.pushHijo(new nodo($1 + "\n\t" , "l_abrir"));
 	$$.pushHijo($2);
-	$$.pushHijo(new nodo("\t" + $3 + "\n" , "l_cerrar"));
+	$$.pushHijo(new nodo("\t\t" + $3 + "\n" , "l_cerrar"));
 	$$.pushHijo($4);
 }
 ;

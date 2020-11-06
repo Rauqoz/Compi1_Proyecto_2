@@ -1,28 +1,54 @@
 const parser = require('./analizadorJS');
 
 var todo = parser.parse(`
-public class sentencias {
+/********************************************************
+*********************************************************
+*********************COMPILADORES 1**********************
+*********************************************************
+********************SEGUNDO SEMESTRE*********************
+*********************************************************
+**************************2020***************************
+*********************************************************
+*******************ENTRADA DE PRUEBA*********************
+*********************************************************
+***********************PROYECTO 2************************
+*********************************************************
+********************************************************/
 
-	public void sentencias2 (){
-		
-		system.out.println(t);
-		
-	do{
-		int x;
-	}while (t == 10 && x < 5);
-			
+public class error {
 
-	}
+   
+    public static void main(String[] args) {
+        int x = 1;
+ 
+        // Salir cuando x llega a ser mayor que 4
+        while (x <= 4)
+        {
+            System.out.println("Valor de x: " + x);
+ 
+            //incrementa el valor de x para la siguiente iteración
+            x++;
+        }
+
+
+        do {   System.out.print ("Contando... " + (contador + 1) );
+
+            contador += 1;
+
+        } while (contador < 10); 
+    }
+
+
 }
 
 
 `);
 
-function prueba(ar) {
+function prueba() {
 	console.log('----------------------');
-	console.log(ar);
+	console.log(todo);
 	console.log('----------------------');
-	console.log(ar.raiz.traduccion());
+	console.log(todo.raiz.traduccion());
 }
 
-prueba(todo);
+prueba();

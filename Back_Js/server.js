@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const body = require('body-parser');
 const cors = require('cors');
-const prueba = require('./prueba');
-const port = 5100;
+const analizador = require('./analizadorJS');
+
+const port = 5200;
 
 // settings
 app.use(body.json());
@@ -11,15 +12,15 @@ app.use(body.urlencoded({ extended: false }));
 app.use(cors());
 
 //routes
-
-app.get('/', (req, res) => {
-	var texto = 'La Prueba';
-	res.send({ prueba: texto });
+app.post('/analizadorJs', (req, res) => {
+	const paraAnalizar = req.body.paraAnalizar;
+	const arbol = analizador.parse(paraAnalizar);
+	console.log(arbol);
+	res.send({ parametro1: arbol, parametro2: 'niño gay' });
 });
 
-app.post('/prueba', (req, res) => {
-	var p = prueba.parse(req.body.data);
-	res.send('recibio datos ' + p);
+app.get('/', (req, res) => {
+	res.send({ aran: 'que onda aran', niño: 'niño gay' });
 });
 
 //Listen

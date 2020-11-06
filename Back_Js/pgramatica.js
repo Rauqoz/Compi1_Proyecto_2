@@ -2,23 +2,30 @@ const parser = require('./analizadorJS');
 
 var todo = parser.parse(`
 public class Hola{
-    int x = 3+3/5*(3+3);
-    public static void main(String[] args){
-        if(X==Y){
-            String A = "xD";
-            char B = 'B';
-            double C = 1.1;
-        }else{
-            
-        }
-    }
+        
+		public void yy (int x , string p){
+			int x = o;
+			u ;
+			string p = "hola";
+		}
+
+
 }
+
+
+public interface hfah{
+ 
+}
+
 
 `);
 
 function prueba(ar) {
+	// console.log('----------------------');
+	// console.log(ar);
 	console.log('----------------------');
-	console.log(ar);
+	// traduccion(ar.raiz);
+	console.log(ar.raiz.traduccion());
 }
 
 prueba(todo);

@@ -71,7 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var analizadorJS = (function(){
+var beta = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,3],$V2=[1,4],$V3=[1,19],$V4=[1,17],$V5=[2,17],$V6=[1,22],$V7=[1,20],$V8=[1,21],$V9=[1,23],$Va=[1,24],$Vb=[1,28],$Vc=[1,26],$Vd=[2,9],$Ve=[1,35],$Vf=[2,5,7],$Vg=[2,48],$Vh=[1,51],$Vi=[1,52],$Vj=[2,5,8,26,34,35,36,37],$Vk=[1,72],$Vl=[1,73],$Vm=[1,65],$Vn=[1,66],$Vo=[1,68],$Vp=[1,69],$Vq=[1,70],$Vr=[1,74],$Vs=[1,75],$Vt=[1,76],$Vu=[2,23],$Vv=[19,30,33],$Vw=[2,76],$Vx=[1,89],$Vy=[1,90],$Vz=[1,91],$VA=[1,92],$VB=[1,93],$VC=[1,94],$VD=[1,95],$VE=[1,96],$VF=[1,97],$VG=[1,98],$VH=[1,99],$VI=[1,100],$VJ=[1,101],$VK=[1,102],$VL=[1,103],$VM=[19,30,33,57,59,67,68,69,70,71,72,73,74,75,76,77,78,79],$VN=[2,82],$VO=[19,30],$VP=[2,25],$VQ=[1,142],$VR=[2,84],$VS=[1,147],$VT=[1,161],$VU=[2,41],$VV=[1,152],$VW=[1,153],$VX=[1,154],$VY=[1,155],$VZ=[1,157],$V_=[1,158],$V$=[1,159],$V01=[1,160],$V11=[1,162],$V21=[1,163],$V31=[2,8,10,26,34,35,36,37,39,41,42,44,46,48,50,84,85];
 var parser = {trace: function trace () { },
 yy: {},
@@ -92,10 +92,12 @@ case 1:
 		raiz:raizA,
 		lexicoB: tokensBuenos,
 		lexicoM: tokensMalos,
+		sintacticoB: sintacticoBuenos,
 		sintacticoM: sintacticoMalos
 	};
 	tokensBuenos = [];
 	tokensMalos = [];
+	sintacticoBuenos = [];
 	sintacticoMalos = [];
 	return data;
 
@@ -125,11 +127,11 @@ break;
 case 5:
 
 	this.$ = new nodo("","principal");
-	this.$.pushHijo(new nodo("class ","r_class"));
-	this.$.pushHijo(new nodo($$[$0-3] + " ","r_id"));
-	this.$.pushHijo(new nodo($$[$0-2] + "\n\t","l_abrir"));
+	this.$.pushHijo(new nodo("class","r_class"));
+	this.$.pushHijo(new nodo($$[$0-3],"r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"l_abrir"));
 	this.$.pushHijo($$[$0-1]);
-	this.$.pushHijo(new nodo($$[$0] + "\n","l_cerrar"));
+	this.$.pushHijo(new nodo($$[$0],"l_cerrar"));
 
 break;
 case 6:
@@ -227,44 +229,44 @@ case 19:
 
 	this.$ = new nodo("","metodos");
 	this.$.pushHijo(new nodo("","r_static"));
-	this.$.pushHijo(new nodo("function ","r_void"));
-	this.$.pushHijo(new nodo("main ","r_main"));
-	this.$.pushHijo(new nodo($$[$0-8] + " ","p_abrir"));
+	this.$.pushHijo(new nodo("function","r_void"));
+	this.$.pushHijo(new nodo("main","r_main"));
+	this.$.pushHijo(new nodo($$[$0-8],"p_abrir"));
 	this.$.pushHijo(new nodo("","r_string"));
 	this.$.pushHijo(new nodo("","c_abrir"));
 	this.$.pushHijo(new nodo("","c_cerrar"));
 	this.$.pushHijo(new nodo("","r_args"));
-	this.$.pushHijo(new nodo($$[$0-3] + " ","p_cerrar"));
-	this.$.pushHijo(new nodo($$[$0-2] + "\n\t","l_abrir"));
+	this.$.pushHijo(new nodo($$[$0-3],"p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0-2],"l_abrir"));
 	this.$.pushHijo($$[$0-1]);
-	this.$.pushHijo(new nodo( "\t" + $$[$0] +"\n","l_cerrar"));
+	this.$.pushHijo(new nodo($$[$0],"l_cerrar"));
 
 break;
 case 20:
 
 		this.$ = new nodo("","metodos");
-		this.$.pushHijo(new nodo("function ","r_void"));
-		this.$.pushHijo(new nodo($$[$0-6] + " ","r_id"));
-		this.$.pushHijo(new nodo($$[$0-5] + " ","p_abrir"));
+		this.$.pushHijo(new nodo("function","r_void"));
+		this.$.pushHijo(new nodo($$[$0-6],"r_id"));
+		this.$.pushHijo(new nodo($$[$0-5],"p_abrir"));
 		this.$.pushHijo($$[$0-4]);
-		this.$.pushHijo(new nodo($$[$0-3] + " ","p_cerrar"));
-		this.$.pushHijo(new nodo($$[$0-2] + "\n\t","l_abrir"));
+		this.$.pushHijo(new nodo($$[$0-3],"p_cerrar"));
+		this.$.pushHijo(new nodo($$[$0-2],"l_abrir"));
 		this.$.pushHijo($$[$0-1]);
-		this.$.pushHijo(new nodo("\t" + $$[$0] + "\n","l_cerrar"));
+		this.$.pushHijo(new nodo($$[$0],"l_cerrar"));
 	
 break;
 case 21:
 
 		this.$ = new nodo("","metodos");
 		this.$.pushHijo($$[$0-7]);
-		this.$.nodos[0].nodos[0].tTraducido = "function ";
-		this.$.pushHijo(new nodo($$[$0-6] + " ","r_id"));
-		this.$.pushHijo(new nodo($$[$0-5] + " ","p_abrir"));
+		this.$.nodos[0].nodos[0].tTraducido = "function";
+		this.$.pushHijo(new nodo($$[$0-6],"r_id"));
+		this.$.pushHijo(new nodo($$[$0-5],"p_abrir"));
 		this.$.pushHijo($$[$0-4]);
-		this.$.pushHijo(new nodo($$[$0-3] + " ","p_cerrar"));
-		this.$.pushHijo(new nodo($$[$0-2] + "\n\t","l_abrir"));
+		this.$.pushHijo(new nodo($$[$0-3],"p_cerrar"));
+		this.$.pushHijo(new nodo($$[$0-2],"l_abrir"));
 		this.$.pushHijo($$[$0-1]);
-		this.$.pushHijo(new nodo("\t" + $$[$0] + "\n","l_cerrar"));
+		this.$.pushHijo(new nodo($$[$0],"l_cerrar"));
 	
 break;
 case 22:
@@ -272,7 +274,7 @@ case 22:
 	this.$ = new nodo("","lparametros");
 	this.$.pushHijo($$[$0-2]);
 	this.$.nodos[0].nodos[0].tTraducido = "";
-	this.$.pushHijo(new nodo($$[$0-1] +" ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_id"));
 	this.$.pushHijo($$[$0]);
 
 break;
@@ -284,10 +286,10 @@ break;
 case 24:
 
 	this.$ = new nodo("","parametros");
-	this.$.pushHijo(new nodo($$[$0-3] + " ","r_coma"));
+	this.$.pushHijo(new nodo($$[$0-3],"r_coma"));
 	this.$.pushHijo($$[$0-2]);
-	this.$.nodos[1].nodos[0].tTraducido = "";
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_id"));
+	this.$.nodos[1].tTraducido = "";
+	this.$.pushHijo(new nodo($$[$0-1],"r_id"));
 	this.$.pushHijo($$[$0]);
 
 
@@ -301,6 +303,8 @@ case 26:
 
 		this.$ = new nodo("","ltipos");
 		this.$.pushHijo(new nodo("var ","r_int"));
+		console.log("es int");
+
 
 break;
 case 27:
@@ -342,7 +346,7 @@ break;
 case 32:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_id"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -350,7 +354,7 @@ break;
 case 33:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_return"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_return"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -358,7 +362,7 @@ break;
 case 34:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_continue"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_continue"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 	this.$.pushHijo($$[$0]);
 
@@ -366,7 +370,7 @@ break;
 case 35:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_break"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_break"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 	this.$.pushHijo($$[$0]);
 
@@ -381,7 +385,7 @@ break;
 case 37:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_if"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_if"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -389,7 +393,7 @@ break;
 case 38:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_for"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_for"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -397,7 +401,7 @@ break;
 case 39:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_while"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_while"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -405,7 +409,7 @@ break;
 case 40:
 
 	this.$ = new nodo("","linstrucciones");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_do"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_do"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -438,7 +442,7 @@ break;
 case 45:
 
 	this.$ = new nodo("","declaracion");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_id"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
@@ -446,15 +450,15 @@ break;
 case 46:
 
 	this.$ = new nodo("","ldeclaracion");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_coma"));
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_coma"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_id"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 47:
 
 	this.$ = new nodo("","ldeclaracion");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_igual"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_igual"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -465,8 +469,8 @@ break;
 case 49:
 
 	this.$ = new nodo("","mdeclaracion");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_coma"));
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_coma"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_id"));
 	this.$.pushHijo($$[$0]);
 
 break;
@@ -476,14 +480,14 @@ break;
 case 51:
 
 	this.$ = new nodo("","lexpresion");
-	this.$.pushHijo(new nodo($$[$0-1] + "","r_mas"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_mas"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 52:
 
 	this.$ = new nodo("","lexpresion");
-	this.$.pushHijo(new nodo($$[$0-1] + "","r_menos"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menos"));
 	this.$.pushHijo($$[$0]);
 
 break;
@@ -496,21 +500,21 @@ break;
 case 54:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_numero"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_numero"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 55:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo("\'"+$$[$0-1]+ "\'","r_cadena"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_cadena"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 56:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo("\'"+$$[$0-1]+ "\'","r_caracter"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_caracter"));
 	this.$.pushHijo($$[$0]);
 
 break;
@@ -524,7 +528,7 @@ break;
 case 58:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_id"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_id"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -532,121 +536,121 @@ break;
 case 59:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo($$[$0-3] + " ","p_abrir"));
+	this.$.pushHijo(new nodo($$[$0-3],"p_abrir"));
 	this.$.pushHijo($$[$0-2]);
-	this.$.pushHijo(new nodo($$[$0-1] + " ","p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0-1],"p_cerrar"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 60:
 
 	this.$ = new nodo("","expresion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_not"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_not"));
 	this.$.pushHijo($$[$0]);
 	
 break;
 case 61:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] +" ","r_mas"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_mas"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 62:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_menos"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menos"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 63:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_asterisco"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_asterisco"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 64:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_diagonal"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_diagonal"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 65:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_masmas"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_masmas"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 66:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_menosmenos"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menosmenos"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 67:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_menor"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menor"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 68:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_mayor"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_mayor"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 69:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_mayorigual"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_mayorigual"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 70:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_menorigual"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menorigual"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 71:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_igualigual"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_igualigual"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 72:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_notigual"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_notigual"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 73:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_and"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_and"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 74:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_or"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_or"));
 	this.$.pushHijo($$[$0]);
 
 break;
 case 75:
 
 	this.$ = new nodo("","operacion");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_xor"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_xor"));
 	this.$.pushHijo($$[$0]);
 
 break;
@@ -658,21 +662,21 @@ break;
 case 77:
 
 	this.$ = new nodo("","booleano");
-	this.$.pushHijo(new nodo($$[$0] + " ","r_true"));
+	this.$.pushHijo(new nodo($$[$0],"r_true"));
 
 break;
 case 78:
 
 	this.$ = new nodo("","booleano");
-	this.$.pushHijo(new nodo($$[$0] + " ","r_false"));
+	this.$.pushHijo(new nodo($$[$0],"r_false"));
 
 break;
 case 79:
 
 	this.$ = new nodo("","emetodo");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","p_abrir"));
+	this.$.pushHijo(new nodo($$[$0-2],"p_abrir"));
 	this.$.pushHijo($$[$0-1]);
-	this.$.pushHijo(new nodo($$[$0] + " ","p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0],"p_cerrar"));
 
 break;
 case 80:
@@ -695,7 +699,7 @@ break;
 case 83:
 
 	this.$ = new nodo("","valores");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_coma"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_coma"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo($$[$0]);
 
@@ -708,16 +712,16 @@ break;
 case 85:
 
 	this.$ = new nodo("","seleccionid");
-	this.$.pushHijo(new nodo($$[$0-3] + " ","p_abrir"));
+	this.$.pushHijo(new nodo($$[$0-3],"p_abrir"));
 	this.$.pushHijo($$[$0-2]);
-	this.$.pushHijo(new nodo($$[$0-1] + " ","p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0-1],"p_cerrar"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
 break;
 case 86:
 
 	this.$ = new nodo("","seleccionid");
-	this.$.pushHijo(new nodo($$[$0-2] + " ","r_igual"));
+	this.$.pushHijo(new nodo($$[$0-2],"r_igual"));
 	this.$.pushHijo($$[$0-1]);
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
@@ -725,14 +729,14 @@ break;
 case 87:
 
 	this.$ = new nodo("","seleccionid");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_masmas"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_masmas"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
 break;
 case 88:
 
 	this.$ = new nodo("","seleccionid");
-	this.$.pushHijo(new nodo($$[$0-1] + " ","r_menosmenos"));
+	this.$.pushHijo(new nodo($$[$0-1],"r_menosmenos"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
 break;
@@ -753,9 +757,9 @@ case 91:
 
 	this.$ =  new nodo("","prints");
 	this.$.pushHijo(new nodo("console.log","r_fprint"));
-	this.$.pushHijo(new nodo($$[$0-3] + " ","p_abrir"));
+	this.$.pushHijo(new nodo($$[$0-3],"p_abrir"));
 	this.$.pushHijo($$[$0-2]);
-	this.$.pushHijo(new nodo($$[$0-1] + " ","p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0-1],"p_cerrar"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
 break;
@@ -763,9 +767,9 @@ case 92:
 
 	this.$ =  new nodo("","prints");
 	this.$.pushHijo(new nodo("console.log","r_fprintln"));
-	this.$.pushHijo(new nodo($$[$0-3] + " ","p_abrir"));
+	this.$.pushHijo(new nodo($$[$0-3],"p_abrir"));
 	this.$.pushHijo($$[$0-2]);
-	this.$.pushHijo(new nodo($$[$0-1] + " ","p_cerrar"));
+	this.$.pushHijo(new nodo($$[$0-1],"p_cerrar"));
 	this.$.pushHijo(new nodo("\n","r_puntocoma"));
 
 break;
@@ -1051,6 +1055,7 @@ _handle_error:
 
 	var tokensBuenos = new Array();
 	var tokensMalos = new Array();
+	var sintacticoBuenos = new Array();
 	var sintacticoMalos = new Array();
 	
 /* generated by jison-lex 0.3.4 */
@@ -1524,9 +1529,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = analizadorJS;
-exports.Parser = analizadorJS.Parser;
-exports.parse = function () { return analizadorJS.parse.apply(analizadorJS, arguments); };
+exports.parser = beta;
+exports.Parser = beta.Parser;
+exports.parse = function () { return beta.parse.apply(beta, arguments); };
 exports.main = function commonjsMain (args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');

@@ -35,6 +35,7 @@
 
 	var tokensBuenos = new Array();
 	var tokensMalos = new Array();
+	var sintacticoBuenos = new Array();
 	var sintacticoMalos = new Array();
 	
 %}
@@ -138,10 +139,12 @@ start:	lista {
 		raiz:raizA,
 		lexicoB: tokensBuenos,
 		lexicoM: tokensMalos,
+		sintacticoB: sintacticoBuenos,
 		sintacticoM: sintacticoMalos
 	};
 	tokensBuenos = [];
 	tokensMalos = [];
+	sintacticoBuenos = [];
 	sintacticoMalos = [];
 	return data;
 }
@@ -168,11 +171,11 @@ lista:	r_public principal  lista{
 
 principal:	r_class r_id l_abrir lmetodos l_cerrar  {
 	$$ = new nodo("","principal");
-	$$.pushHijo(new nodo("class ","r_class"));
-	$$.pushHijo(new nodo($2 + " ","r_id"));
-	$$.pushHijo(new nodo($3 + "\n\t","l_abrir"));
+	$$.pushHijo(new nodo("class","r_class"));
+	$$.pushHijo(new nodo($2,"r_id"));
+	$$.pushHijo(new nodo($3,"l_abrir"));
 	$$.pushHijo($4);
-	$$.pushHijo(new nodo($5 + "\n","l_cerrar"));
+	$$.pushHijo(new nodo($5,"l_cerrar"));
 }
 	|	r_interface r_id l_abrir lmetodosdefiniciones l_cerrar {
 		$$ = new nodo("","principal");
@@ -267,40 +270,40 @@ lmetodos:	 r_public metodos  lmetodos{
 metodos:	r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerrar l_abrir linstrucciones l_cerrar {
 	$$ = new nodo("","metodos");
 	$$.pushHijo(new nodo("","r_static"));
-	$$.pushHijo(new nodo("function ","r_void"));
-	$$.pushHijo(new nodo("main ","r_main"));
-	$$.pushHijo(new nodo($4 + " ","p_abrir"));
+	$$.pushHijo(new nodo("function","r_void"));
+	$$.pushHijo(new nodo("main","r_main"));
+	$$.pushHijo(new nodo($4,"p_abrir"));
 	$$.pushHijo(new nodo("","r_string"));
 	$$.pushHijo(new nodo("","c_abrir"));
 	$$.pushHijo(new nodo("","c_cerrar"));
 	$$.pushHijo(new nodo("","r_args"));
-	$$.pushHijo(new nodo($9 + " ","p_cerrar"));
-	$$.pushHijo(new nodo($10 + "\n\t","l_abrir"));
+	$$.pushHijo(new nodo($9,"p_cerrar"));
+	$$.pushHijo(new nodo($10,"l_abrir"));
 	$$.pushHijo($11);
-	$$.pushHijo(new nodo( "\t" + $12 +"\n","l_cerrar"));
+	$$.pushHijo(new nodo($12,"l_cerrar"));
 }
 	|	r_void r_id p_abrir lparametros p_cerrar l_abrir linstrucciones  l_cerrar{
 		$$ = new nodo("","metodos");
-		$$.pushHijo(new nodo("function ","r_void"));
-		$$.pushHijo(new nodo($2 + " ","r_id"));
-		$$.pushHijo(new nodo($3 + " ","p_abrir"));
+		$$.pushHijo(new nodo("function","r_void"));
+		$$.pushHijo(new nodo($2,"r_id"));
+		$$.pushHijo(new nodo($3,"p_abrir"));
 		$$.pushHijo($4);
-		$$.pushHijo(new nodo($5 + " ","p_cerrar"));
-		$$.pushHijo(new nodo($6 + "\n\t","l_abrir"));
+		$$.pushHijo(new nodo($5,"p_cerrar"));
+		$$.pushHijo(new nodo($6,"l_abrir"));
 		$$.pushHijo($7);
-		$$.pushHijo(new nodo("\t" + $8 + "\n","l_cerrar"));
+		$$.pushHijo(new nodo($8,"l_cerrar"));
 	}
 	|	ltipos r_id p_abrir lparametros p_cerrar l_abrir linstrucciones l_cerrar{
 		$$ = new nodo("","metodos");
 		$$.pushHijo($1);
-		$$.nodos[0].nodos[0].tTraducido = "function ";
-		$$.pushHijo(new nodo($2 + " ","r_id"));
-		$$.pushHijo(new nodo($3 + " ","p_abrir"));
+		$$.nodos[0].nodos[0].tTraducido = "function";
+		$$.pushHijo(new nodo($2,"r_id"));
+		$$.pushHijo(new nodo($3,"p_abrir"));
 		$$.pushHijo($4);
-		$$.pushHijo(new nodo($5 + " ","p_cerrar"));
-		$$.pushHijo(new nodo($6 + "\n\t","l_abrir"));
+		$$.pushHijo(new nodo($5,"p_cerrar"));
+		$$.pushHijo(new nodo($6,"l_abrir"));
 		$$.pushHijo($7);
-		$$.pushHijo(new nodo("\t" + $8 + "\n","l_cerrar"));
+		$$.pushHijo(new nodo($8,"l_cerrar"));
 	}
 	// | error l_cerrar {
 	// 	console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);
@@ -314,7 +317,7 @@ lparametros:	ltipos r_id parametros {
 	$$ = new nodo("","lparametros");
 	$$.pushHijo($1);
 	$$.nodos[0].nodos[0].tTraducido = "";
-	$$.pushHijo(new nodo($2 +" ","r_id"));
+	$$.pushHijo(new nodo($2,"r_id"));
 	$$.pushHijo($3);
 }
 	|  {
@@ -325,10 +328,10 @@ lparametros:	ltipos r_id parametros {
 
 parametros:	 r_coma ltipos r_id parametros{
 	$$ = new nodo("","parametros");
-	$$.pushHijo(new nodo($1 + " ","r_coma"));
+	$$.pushHijo(new nodo($1,"r_coma"));
 	$$.pushHijo($2);
-	$$.nodos[1].nodos[0].tTraducido = "";
-	$$.pushHijo(new nodo($3 + " ","r_id"));
+	$$.nodos[1].tTraducido = "";
+	$$.pushHijo(new nodo($3,"r_id"));
 	$$.pushHijo($4);
 
 }
@@ -340,6 +343,8 @@ parametros:	 r_coma ltipos r_id parametros{
 ltipos:		r_int {
 		$$ = new nodo("","ltipos");
 		$$.pushHijo(new nodo("var ","r_int"));
+		console.log("es int");
+
 }
 	|	r_double {
 		$$ = new nodo("","ltipos");
@@ -377,25 +382,25 @@ linstrucciones:	 ltipos declaracion linstrucciones{
 }
 	|	 r_id seleccionid linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_id"));
+	$$.pushHijo(new nodo($1,"r_id"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	 r_return lreturn linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_return"));
+	$$.pushHijo(new nodo($1,"r_return"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	 r_continue r_puntocoma linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_continue"));
+	$$.pushHijo(new nodo($1,"r_continue"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 	$$.pushHijo($3);
 }
 	|	 r_break r_puntocoma linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_break"));
+	$$.pushHijo(new nodo($1,"r_break"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 	$$.pushHijo($3);
 }
@@ -406,25 +411,25 @@ linstrucciones:	 ltipos declaracion linstrucciones{
 }
 	|	 r_if mif linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_if"));
+	$$.pushHijo(new nodo($1,"r_if"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	 r_for mfor linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_for"));
+	$$.pushHijo(new nodo($1,"r_for"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	 r_while mwhile linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_while"));
+	$$.pushHijo(new nodo($1,"r_while"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	 r_do mdo linstrucciones{
 	$$ = new nodo("","linstrucciones");
-	$$.pushHijo(new nodo($1 + " ","r_do"));
+	$$.pushHijo(new nodo($1,"r_do"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
@@ -451,7 +456,7 @@ reclinstrucciones: l_cerrar {
 
 declaracion:  r_id ldeclaracion r_puntocoma {
 	$$ = new nodo("","declaracion");
-	$$.pushHijo(new nodo($1 + " ","r_id"));
+	$$.pushHijo(new nodo($1,"r_id"));
 	$$.pushHijo($2);
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
@@ -466,13 +471,13 @@ declaracion:  r_id ldeclaracion r_puntocoma {
 
 ldeclaracion:	r_coma r_id ldeclaracion {
 	$$ = new nodo("","ldeclaracion");
-	$$.pushHijo(new nodo($1 + " ","r_coma"));
-	$$.pushHijo(new nodo($2 + " ","r_id"));
+	$$.pushHijo(new nodo($1,"r_coma"));
+	$$.pushHijo(new nodo($2,"r_id"));
 	$$.pushHijo($3);
 }
 	|	r_igual lexpresion mdeclaracion {
 	$$ = new nodo("","ldeclaracion");
-	$$.pushHijo(new nodo($1 + " ","r_igual"));
+	$$.pushHijo(new nodo($1,"r_igual"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
@@ -489,8 +494,8 @@ ldeclaracion:	r_coma r_id ldeclaracion {
 
 mdeclaracion:	r_coma r_id ldeclaracion {
 	$$ = new nodo("","mdeclaracion");
-	$$.pushHijo(new nodo($1 + " ","r_coma"));
-	$$.pushHijo(new nodo($2 + " ","r_id"));
+	$$.pushHijo(new nodo($1,"r_coma"));
+	$$.pushHijo(new nodo($2,"r_id"));
 	$$.pushHijo($3);
 }
 	|	{$$ = new nodo("","mdeclaracion");}
@@ -507,12 +512,12 @@ mdeclaracion:	r_coma r_id ldeclaracion {
 
 lexpresion:	r_mas expresion {
 	$$ = new nodo("","lexpresion");
-	$$.pushHijo(new nodo($1 + "","r_mas"));
+	$$.pushHijo(new nodo($1,"r_mas"));
 	$$.pushHijo($2);
 }
 	|	r_menos expresion {
 	$$ = new nodo("","lexpresion");
-	$$.pushHijo(new nodo($1 + "","r_menos"));
+	$$.pushHijo(new nodo($1,"r_menos"));
 	$$.pushHijo($2);
 }
 	|	expresion {
@@ -523,17 +528,17 @@ lexpresion:	r_mas expresion {
 
 expresion:	r_numero operacion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo($1 + " ","r_numero"));
+	$$.pushHijo(new nodo($1,"r_numero"));
 	$$.pushHijo($2);
 }
 	|	r_cadena operacion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo("\'"+$1+ "\'","r_cadena"));
+	$$.pushHijo(new nodo($1,"r_cadena"));
 	$$.pushHijo($2);
 }
 	|	r_caracter operacion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo("\'"+$1+ "\'","r_caracter"));
+	$$.pushHijo(new nodo($1,"r_caracter"));
 	$$.pushHijo($2);
 }
 	|	booleano operacion {
@@ -543,20 +548,20 @@ expresion:	r_numero operacion {
 }
 	|	r_id emetodo operacion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo($1 + " ","r_id"));
+	$$.pushHijo(new nodo($1,"r_id"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
 	|	p_abrir lexpresion p_cerrar operacion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo($1 + " ","p_abrir"));
+	$$.pushHijo(new nodo($1,"p_abrir"));
 	$$.pushHijo($2);
-	$$.pushHijo(new nodo($3 + " ","p_cerrar"));
+	$$.pushHijo(new nodo($3,"p_cerrar"));
 	$$.pushHijo($4);
 }
 	|	r_not expresion {
 	$$ = new nodo("","expresion");
-	$$.pushHijo(new nodo($1 + " ","r_not"));
+	$$.pushHijo(new nodo($1,"r_not"));
 	$$.pushHijo($2);
 	}
 	/* |	error recexpresion {
@@ -570,77 +575,77 @@ expresion:	r_numero operacion {
 
 operacion:	r_mas expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 +" ","r_mas"));
+	$$.pushHijo(new nodo($1,"r_mas"));
 	$$.pushHijo($2);
 }
 	|	r_menos expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_menos"));
+	$$.pushHijo(new nodo($1,"r_menos"));
 	$$.pushHijo($2);
 }
 	|	r_asterisco expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_asterisco"));
+	$$.pushHijo(new nodo($1,"r_asterisco"));
 	$$.pushHijo($2);
 }
 	|	r_diagonal expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_diagonal"));
+	$$.pushHijo(new nodo($1,"r_diagonal"));
 	$$.pushHijo($2);
 }
 	|	r_masmas operacion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_masmas"));
+	$$.pushHijo(new nodo($1,"r_masmas"));
 	$$.pushHijo($2);
 }
 	|	r_menosmenos operacion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_menosmenos"));
+	$$.pushHijo(new nodo($1,"r_menosmenos"));
 	$$.pushHijo($2);
 }
 	|	r_menor expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_menor"));
+	$$.pushHijo(new nodo($1,"r_menor"));
 	$$.pushHijo($2);
 }
 	|	r_mayor expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_mayor"));
+	$$.pushHijo(new nodo($1,"r_mayor"));
 	$$.pushHijo($2);
 }
 	|	r_mayorigual expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_mayorigual"));
+	$$.pushHijo(new nodo($1,"r_mayorigual"));
 	$$.pushHijo($2);
 }
 	|	r_menorigual expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_menorigual"));
+	$$.pushHijo(new nodo($1,"r_menorigual"));
 	$$.pushHijo($2);
 }
 	|	r_igualigual expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_igualigual"));
+	$$.pushHijo(new nodo($1,"r_igualigual"));
 	$$.pushHijo($2);
 }
 	|	r_notigual expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_notigual"));
+	$$.pushHijo(new nodo($1,"r_notigual"));
 	$$.pushHijo($2);
 }
 	|	r_and expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_and"));
+	$$.pushHijo(new nodo($1,"r_and"));
 	$$.pushHijo($2);
 }
 	|	r_or expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_or"));
+	$$.pushHijo(new nodo($1,"r_or"));
 	$$.pushHijo($2);
 }
 	|	r_xor expresion {
 	$$ = new nodo("","operacion");
-	$$.pushHijo(new nodo($1 + " ","r_xor"));
+	$$.pushHijo(new nodo($1,"r_xor"));
 	$$.pushHijo($2);
 }
 	|	{
@@ -657,19 +662,19 @@ operacion:	r_mas expresion {
 
 booleano:	r_true {
 	$$ = new nodo("","booleano");
-	$$.pushHijo(new nodo($1 + " ","r_true"));
+	$$.pushHijo(new nodo($1,"r_true"));
 }
 	|	r_false {
 	$$ = new nodo("","booleano");
-	$$.pushHijo(new nodo($1 + " ","r_false"));
+	$$.pushHijo(new nodo($1,"r_false"));
 }
 ;
 
 emetodo:	p_abrir lvalores p_cerrar {
 	$$ = new nodo("","emetodo");
-	$$.pushHijo(new nodo($1 + " ","p_abrir"));
+	$$.pushHijo(new nodo($1,"p_abrir"));
 	$$.pushHijo($2);
-	$$.pushHijo(new nodo($3 + " ","p_cerrar"));
+	$$.pushHijo(new nodo($3,"p_cerrar"));
 }
 	|	{
 		$$ = new nodo("","emetodo");
@@ -688,7 +693,7 @@ lvalores:	expresion valores {
 
 valores:	r_coma lexpresion valores {
 	$$ = new nodo("","valores");
-	$$.pushHijo(new nodo($1 + " ","r_coma"));
+	$$.pushHijo(new nodo($1,"r_coma"));
 	$$.pushHijo($2);
 	$$.pushHijo($3);
 }
@@ -699,25 +704,25 @@ valores:	r_coma lexpresion valores {
 
 seleccionid: 	p_abrir lvalores p_cerrar r_puntocoma {
 	$$ = new nodo("","seleccionid");
-	$$.pushHijo(new nodo($1 + " ","p_abrir"));
+	$$.pushHijo(new nodo($1,"p_abrir"));
 	$$.pushHijo($2);
-	$$.pushHijo(new nodo($3 + " ","p_cerrar"));
+	$$.pushHijo(new nodo($3,"p_cerrar"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 	|	r_igual lexpresion r_puntocoma {
 	$$ = new nodo("","seleccionid");
-	$$.pushHijo(new nodo($1 + " ","r_igual"));
+	$$.pushHijo(new nodo($1,"r_igual"));
 	$$.pushHijo($2);
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 	|	r_masmas r_puntocoma {
 	$$ = new nodo("","seleccionid");
-	$$.pushHijo(new nodo($1 + " ","r_masmas"));
+	$$.pushHijo(new nodo($1,"r_masmas"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 	|	r_menosmenos r_puntocoma {
 	$$ = new nodo("","seleccionid");
-	$$.pushHijo(new nodo($1 + " ","r_menosmenos"));
+	$$.pushHijo(new nodo($1,"r_menosmenos"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 	/* |	error r_puntocoma {
@@ -743,17 +748,17 @@ lreturn: 	lexpresion r_puntocoma {
 prints:		r_fprint p_abrir lexpresion p_cerrar r_puntocoma {
 	$$ =  new nodo("","prints");
 	$$.pushHijo(new nodo("console.log","r_fprint"));
-	$$.pushHijo(new nodo($2 + " ","p_abrir"));
+	$$.pushHijo(new nodo($2,"p_abrir"));
 	$$.pushHijo($3);
-	$$.pushHijo(new nodo($4 + " ","p_cerrar"));
+	$$.pushHijo(new nodo($4,"p_cerrar"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 	|	r_fprintln p_abrir lexpresion p_cerrar r_puntocoma {
 	$$ =  new nodo("","prints");
 	$$.pushHijo(new nodo("console.log","r_fprintln"));
-	$$.pushHijo(new nodo($2 + " ","p_abrir"));
+	$$.pushHijo(new nodo($2,"p_abrir"));
 	$$.pushHijo($3);
-	$$.pushHijo(new nodo($4 + " ","p_cerrar"));
+	$$.pushHijo(new nodo($4,"p_cerrar"));
 	$$.pushHijo(new nodo("\n","r_puntocoma"));
 }
 ;

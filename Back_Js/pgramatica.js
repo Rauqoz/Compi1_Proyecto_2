@@ -1,30 +1,27 @@
 const parser = require('./analizadorJS');
 
 var todo = parser.parse(`
-public class Hola{
-        
-		public void yy (int x , string p){
-			int x = o;
-			u ;
-			string p = "hola";
-		}
+public class sentencias {
 
+	public void sentencias2 (){
+		
+		system.out.println(t);
+		
+	do{
+		int x;
+	}while (t == 10 && x < 5);
+			
 
-}
-
-
-public interface hfah{
- 
+	}
 }
 
 
 `);
 
 function prueba(ar) {
-	// console.log('----------------------');
-	// console.log(ar);
 	console.log('----------------------');
-	// traduccion(ar.raiz);
+	console.log(ar);
+	console.log('----------------------');
 	console.log(ar.raiz.traduccion());
 }
 

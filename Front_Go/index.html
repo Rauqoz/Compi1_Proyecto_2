@@ -12,7 +12,6 @@
     <script src="mode/javascript/javascript.js"></script>
     <!-- mios -->
     <link href="index.css" type="text/css" rel="stylesheet" />
-    <script src="scripts.js"></script>
   </head>
   <body>
     <!-- parte del menu -->
@@ -23,8 +22,7 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a  onclick="tabOpen()" href="#">Abrir</a>
-          <a  onclick="tabNuevo()" href="#">Nuevo</a>
+          <input type="file" id="tabOpen">
           <a  onclick="tabGuardar()" href="#">Guardar</a>
         </div>
       </div>
@@ -47,7 +45,7 @@
       <!-- Cuerpo pagina -->
       <div class="izquierda">
         <h1 class="iden">Raul Quiñonez</h1>
-        <h1 class="iden">-----*----</h1>
+        <h1 class="iden">---------</h1>
         <br />
         <!-- parte de las tabs -->
         <div class="tab">
@@ -138,6 +136,6 @@
       );
 
     </script>
-
+    <script src="scripts.js"></script>
   </body>
 </html>

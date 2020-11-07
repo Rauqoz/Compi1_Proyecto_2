@@ -87,6 +87,10 @@
 "]"					    { tokensBuenos.push( new token(yytext,"c_cerrar",yylloc.first_line, yylloc.first_column)); return 'c_cerrar';}
 
 "%"					    { tokensBuenos.push( new token(yytext,"r_modular",yylloc.first_line, yylloc.first_column)); return 'r_modular';}
+"+="				    { tokensBuenos.push( new token(yytext,"r_masigual",yylloc.first_line, yylloc.first_column)); return 'r_masigual';}
+"-="				    { tokensBuenos.push( new token(yytext,"r_menosigual",yylloc.first_line, yylloc.first_column)); return 'r_menosigual';}
+"*="				    { tokensBuenos.push( new token(yytext,"r_asteriscoigual",yylloc.first_line, yylloc.first_column)); return 'r_asteriscoigual';}
+"/="				    { tokensBuenos.push( new token(yytext,"r_diagonaligual",yylloc.first_line, yylloc.first_column)); return 'r_diagonaligual';}
 "++"				    { tokensBuenos.push( new token(yytext,"r_masmas",yylloc.first_line, yylloc.first_column)); return 'r_masmas';}
 "--"				    { tokensBuenos.push( new token(yytext,"r_menosmenos",yylloc.first_line, yylloc.first_column)); return 'r_menosmenos';}
 "+"					    { tokensBuenos.push( new token(yytext,"r_mas",yylloc.first_line, yylloc.first_column)); return 'r_mas';}
@@ -294,7 +298,7 @@ metodos:	r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerra
 	|	ltipos r_id p_abrir lparametros p_cerrar l_abrir linstrucciones l_cerrar{
 		$$ = new nodo("","metodos");
 		$$.pushHijo($1);
-		$$.nodos[0].nodos[0].tTraducido = "function ";
+		$$.hijos[0].hijos[0].tTraducido = "function ";
 		$$.pushHijo(new nodo($2 + " ","r_id"));
 		$$.pushHijo(new nodo($3 + " ","p_abrir"));
 		$$.pushHijo($4);
@@ -316,7 +320,7 @@ metodos:	r_static r_void r_main p_abrir r_string c_abrir c_cerrar r_args p_cerra
 lparametros:	ltipos r_id parametros {
 	$$ = new nodo("","lparametros");
 	$$.pushHijo($1);
-	$$.nodos[0].nodos[0].tTraducido = "";
+	$$.hijos[0].hijos[0].tTraducido = "";
 	$$.pushHijo(new nodo($2 +" ","r_id"));
 	$$.pushHijo($3);
 }
@@ -330,7 +334,7 @@ parametros:	 r_coma ltipos r_id parametros{
 	$$ = new nodo("","parametros");
 	$$.pushHijo(new nodo($1 + " ","r_coma"));
 	$$.pushHijo($2);
-	$$.nodos[1].nodos[0].tTraducido = "";
+	$$.hijos[1].hijos[0].tTraducido = "";
 	$$.pushHijo(new nodo($3 + " ","r_id"));
 	$$.pushHijo($4);
 
@@ -732,6 +736,30 @@ seleccionid: 	p_abrir lvalores p_cerrar r_puntocoma {
 	$$ = new nodo("","seleccionid");
 	$$.pushHijo(new nodo($1 + " ","r_menosmenos"));
 	$$.pushHijo(new nodo($2 + "\n","r_puntocoma"));
+}
+	|	r_masigual lexpresion r_puntocoma {
+	$$ = new nodo("","seleccionid");
+	$$.pushHijo(new nodo($1 + " ","r_masigual"));
+	$$.pushHijo($2);
+	$$.pushHijo(new nodo($3 + "\n","r_puntocoma"));
+}
+	|	r_menosigual lexpresion r_puntocoma {
+	$$ = new nodo("","seleccionid");
+	$$.pushHijo(new nodo($1 + " ","r_menosigual"));
+	$$.pushHijo($2);
+	$$.pushHijo(new nodo($3 + "\n","r_puntocoma"));
+}
+	|	r_asteriscoigual lexpresion r_puntocoma {
+	$$ = new nodo("","seleccionid");
+	$$.pushHijo(new nodo($1 + " ","r_asteriscoigual"));
+	$$.pushHijo($2);
+	$$.pushHijo(new nodo($3 + "\n","r_puntocoma"));
+}
+	|	r_diagonaligual lexpresion r_puntocoma {
+	$$ = new nodo("","seleccionid");
+	$$.pushHijo(new nodo($1 + " ","r_diagonaligual"));
+	$$.pushHijo($2);
+	$$.pushHijo(new nodo($3 + "\n","r_puntocoma"));
 }
 	/* |	error r_puntocoma {
 		console.error('Error Sintactico: ' + yytext + ' linea ' + this._$.first_line + ' columna ' + this._$.first_column);

@@ -3,20 +3,20 @@ class nodo {
 		this.id = 0;
 		this.tTraducido = tTraducido;
 		this.tTipo = tTipo;
-		this.nodos = new Array();
+		this.hijos = [];
 	}
 
 	pushHijo(hijo) {
-		this.nodos.push(hijo);
+		this.hijos.push(hijo);
 	}
 
 	traduccion() {
 		this.traduc = '';
 		this.traduc += this.tTraducido;
 
-		for (let i in this.nodos) {
-			if (this.nodos[i].nodos != null) {
-				this.traduc += this.nodos[i].traduccion();
+		for (let i in this.hijos) {
+			if (this.hijos[i].hijos != null) {
+				this.traduc += this.hijos[i].traduccion();
 			}
 		}
 		return this.traduc;

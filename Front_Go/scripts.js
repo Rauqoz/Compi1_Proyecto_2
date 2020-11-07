@@ -197,11 +197,20 @@ function tabAmbos() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
 					// console.log(data.dot);
 				})
 				.catch((error) => console.log('error', error));
@@ -223,11 +232,20 @@ function tabAmbos() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
 					// console.log(data.dot);
 				})
 				.catch((error) => console.log('error', error));
@@ -249,11 +267,20 @@ function tabAmbos() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
 					// console.log(data.dot);
 				})
 				.catch((error) => console.log('error', error));
@@ -275,11 +302,20 @@ function tabAmbos() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
 					// console.log(data.dot);
 				})
 				.catch((error) => console.log('error', error));
@@ -290,7 +326,7 @@ function tabAmbos() {
 	}
 }
 
-function paginaTokensB(data) {
+function paginaTokensBJs(data) {
 	let hoy = new Date();
 	let dd = hoy.getDate();
 	let mm = hoy.getMonth() + 1;
@@ -332,7 +368,7 @@ function paginaTokensB(data) {
 					<body>
 					</html>`;
 
-	let nombre = 'Tokens' + formato + '.html'; //nombre del archivo
+	let nombre = 'Tokens Js' + formato + '.html'; //nombre del archivo
 	let file = new Blob([ contenido ], { type: 'text/plain' });
 
 	if (window.navigator.msSaveOrOpenBlob) {
@@ -351,7 +387,68 @@ function paginaTokensB(data) {
 	}
 }
 
-function paginaTokensM(data) {
+function paginaTokensBPy(data) {
+	let hoy = new Date();
+	let dd = hoy.getDate();
+	let mm = hoy.getMonth() + 1;
+	let yyyy = hoy.getFullYear();
+	let HH = hoy.getHours();
+	let MM = hoy.getMinutes();
+	let formato = '_' + dd + '_' + mm + '_' + yyyy + '_' + HH + '_' + MM;
+	let cont = 1;
+
+	let contenido = '';
+	contenido += `<html>
+					<head>
+					</head>
+					<body style='background-color:#34495E'>
+					`;
+	contenido += `<h1 align=center><font color ='white'> Lista de Tokens </h1>
+					<br>
+					<table border=11 , align='center', bordercolor='orange'>
+					<tr align=center> <th><font color ='white'> Numero </th> <th><font color ='white'> Palabra </th> <th><font color ='white'> Tipo </th> <th><font color ='white'> Fila </th> <th><font color ='white'> Columna </th></tr>
+					`;
+
+	data.lB.forEach((element) => {
+		contenido +=
+			" <tr align=center> <td><font color ='white'> " +
+			cont +
+			" </td> <td><font color ='white'> " +
+			element.palabra +
+			" </td> <td><font color ='white'> " +
+			element.tipo +
+			" </td> <td><font color ='white'> " +
+			element.fila +
+			" </td> <td><font color ='white'> " +
+			element.columna +
+			' </td> </tr>';
+		cont++;
+	});
+
+	contenido += `</table>
+					<body>
+					</html>`;
+
+	let nombre = 'Tokens Py' + formato + '.html'; //nombre del archivo
+	let file = new Blob([ contenido ], { type: 'text/plain' });
+
+	if (window.navigator.msSaveOrOpenBlob) {
+		window.navigator.msSaveOrOpenBlob(file, nombre);
+	} else {
+		let a = document.createElement('a'),
+			url = URL.createObjectURL(file);
+		a.href = url;
+		a.download = nombre;
+		document.body.appendChild(a);
+		a.click();
+		setTimeout(function() {
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+		}, 0);
+	}
+}
+
+function paginaTokensMJs(data) {
 	let hoy = new Date();
 	let dd = hoy.getDate();
 	let mm = hoy.getMonth() + 1;
@@ -391,7 +488,7 @@ function paginaTokensM(data) {
 					<body>
 					</html>`;
 
-	let nombre = 'Errores Tokens' + formato + '.html'; //nombre del archivo
+	let nombre = 'Errores Tokens Js' + formato + '.html'; //nombre del archivo
 	let file = new Blob([ contenido ], { type: 'text/plain' });
 
 	if (window.navigator.msSaveOrOpenBlob) {
@@ -410,7 +507,66 @@ function paginaTokensM(data) {
 	}
 }
 
-function paginaSintacticosM(data) {
+function paginaTokensMPy(data) {
+	let hoy = new Date();
+	let dd = hoy.getDate();
+	let mm = hoy.getMonth() + 1;
+	let yyyy = hoy.getFullYear();
+	let HH = hoy.getHours();
+	let MM = hoy.getMinutes();
+	let formato = '_' + dd + '_' + mm + '_' + yyyy + '_' + HH + '_' + MM;
+	let cont = 1;
+
+	let contenido = '';
+	contenido += `<html>
+					<head>
+					</head>
+					<body style='background-color:#34495E'>
+					`;
+	contenido += `<h1 align=center><font color ='white'> Lista de Errores Tokens </h1>
+					<br>
+					<table border=11 , align='center', bordercolor='orange'>
+					<tr align=center> <th><font color ='white'> Numero </th> <th><font color ='white'> Fila </th> <th><font color ='white'> Columna </th> <th><font color ='white'> Palabra </th></tr>
+					`;
+
+	data.lM.forEach((element) => {
+		contenido +=
+			" <tr align=center> <td><font color ='white'> " +
+			cont +
+			" </td> <td><font color ='white'> " +
+			element.fila +
+			" </td> <td><font color ='white'> " +
+			element.columna +
+			" </td> <td><font color ='white'> " +
+			element.palabra +
+			' </td> </tr>';
+		cont++;
+	});
+
+	contenido += `</table>
+					<body>
+					</html>`;
+
+	let nombre = 'Errores Tokens Py' + formato + '.html'; //nombre del archivo
+	let file = new Blob([ contenido ], { type: 'text/plain' });
+
+	if (window.navigator.msSaveOrOpenBlob) {
+		window.navigator.msSaveOrOpenBlob(file, nombre);
+	} else {
+		let a = document.createElement('a'),
+			url = URL.createObjectURL(file);
+		a.href = url;
+		a.download = nombre;
+		document.body.appendChild(a);
+		a.click();
+		setTimeout(function() {
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+		}, 0);
+	}
+}
+
+function paginaSintacticosMJs(data) {
 	let hoy = new Date();
 	let dd = hoy.getDate();
 	let mm = hoy.getMonth() + 1;
@@ -567,9 +723,9 @@ function tabJs() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
 					// console.log(data.dot);
@@ -593,9 +749,9 @@ function tabJs() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
 					// console.log(data.dot);
@@ -619,9 +775,9 @@ function tabJs() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
 					// console.log(data.dot);
@@ -645,9 +801,9 @@ function tabJs() {
 			fetch('http://localhost:5200/analizadorJs', requestOptions)
 				.then((response) => response.json())
 				.then((data) => {
-					paginaTokensB(data);
-					paginaTokensM(data);
-					paginaSintacticosM(data);
+					paginaTokensBJs(data);
+					paginaTokensMJs(data);
+					paginaSintacticosMJs(data);
 					paginaTraduccionJs(data);
 					paginaDot(data);
 					// console.log(data.dot);
@@ -662,6 +818,103 @@ function tabJs() {
 
 function tabPy() {
 	console.log('Tab Py');
+	switch (tabActiva) {
+		case 'p1':
+			//post Js
+			var myHeaders = new Headers();
+			myHeaders.append('Content-Type', 'application/json');
+
+			var raw = JSON.stringify({ pTexto: window.code1.getDoc().getValue() });
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+			break;
+		case 'p2':
+			//post Js
+			var myHeaders = new Headers();
+			myHeaders.append('Content-Type', 'application/json');
+
+			var raw = JSON.stringify({ pTexto: window.code2.getDoc().getValue() });
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+			break;
+		case 'p3':
+			//post Js
+			var myHeaders = new Headers();
+			myHeaders.append('Content-Type', 'application/json');
+
+			var raw = JSON.stringify({ pTexto: window.code3.getDoc().getValue() });
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+			break;
+		case 'p4':
+			//post Js
+			var myHeaders = new Headers();
+			myHeaders.append('Content-Type', 'application/json');
+
+			var raw = JSON.stringify({ pTexto: window.code4.getDoc().getValue() });
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+
+			fetch('http://localhost:5300/analizadorPy', requestOptions)
+				.then((response) => response.json())
+				.then((data) => {
+					paginaTokensBPy(data);
+					paginaTokensMPy(data);
+					// console.log(data.dot);
+				})
+				.catch((error) => console.log('error', error));
+			break;
+		default:
+			alert('Escoge Primero un Tab');
+			break;
+	}
 }
 
 function tabPrueba() {

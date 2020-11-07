@@ -18,8 +18,6 @@ class errorToken {
 	}
 }
 
-var prueba = `56.main%++ 20Pedro_g 15.9 1`;
-
 var tokensBuenos = [],
 	tokensMalos = [];
 
@@ -386,4 +384,4 @@ function printL() {
 // lexico(prueba);
 // printL();
 
-module.exports = { tokensBuenos, tokensMalos, lexico, printL };
+module.exports = { tokensBuenos, tokensMalos, lexico };

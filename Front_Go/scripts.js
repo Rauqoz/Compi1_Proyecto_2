@@ -918,5 +918,5 @@ function tabPy() {
 }
 
 function tabPrueba() {
-	console.log('Tab Prueba 5');
+	alert("Aux Quiero Ganar :'v ");
 }

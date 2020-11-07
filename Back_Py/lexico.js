@@ -18,15 +18,7 @@ class errorToken {
 	}
 }
 
-var prueba = `56.main%++ 20Pedro_elmanco 15.9 1 0El_Niño_Gay15 alf@ro==>='A'
-"hola alfarito te quiero mucho :3 "
-//alfaro es bien mentiroza
-main public static alfarito
-//comentario 2
-@ +-+-+-- === ? { } 5.papel *8
-/*comentario multi
-linea 
-*****/`;
+var prueba = `56.main%++ 20Pedro_g 15.9 1`;
 
 var tokensBuenos = [],
 	tokensMalos = [];
